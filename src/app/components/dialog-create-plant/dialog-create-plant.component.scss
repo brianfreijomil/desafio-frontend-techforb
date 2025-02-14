@@ -1,0 +1,45 @@
+.label-form-color {
+    color: rgba(131, 139, 158, 1);
+}
+
+mat-select {
+    position: absolute;
+    top: 15%;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+::ng-deep .mat-mdc-text-field-wrapper .mdc-notched-outline__leading {
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-color: oklch(0.872 0.01 258.338) !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: oklch(0.872 0.01 258.338) !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: 100% !important;
+}
+
+::ng-deep .mat-mdc-select-arrow svg {
+    fill: gray !important;
+}
+
+.button-dialog {
+    padding: 8px 0 8px 0;
+}
+
+::ng-deep .mat-mdc-select-placeholder {
+    color: rgba(131, 139, 158, 1) !important;
+}
+
+.mat-mdc-select, .mat-mdc-option {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}

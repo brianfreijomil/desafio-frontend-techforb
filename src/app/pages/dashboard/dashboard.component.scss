@@ -1,0 +1,69 @@
+.sidebar {
+    background-color: #FFFFFF;
+}
+
+.card-p-color {
+    color: #8E8EA1;
+}
+
+.card-number-color {
+    color: #22242C;
+}
+
+/* TABLE STYLE */
+
+.demo-table {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-mdc-header-cell {
+    border: none;
+    color: #B0CAD1;
+}
+
+.mat-mdc-row .mat-mdc-cell:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.mat-mdc-row .mat-mdc-cell:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding-right: 0;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    background-color: #EFF2F7;
+    cursor: pointer;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.b-add-plant {
+    border: 1px solid #B0CAD1;
+}
+
+.header-table {
+    border-bottom: 1px solid #B0CAD1;
+}
+
+.bg-container-unselected-plant {
+    height: 178px;
+    border-radius: 15px;
+    background-color:rgba(255, 255, 255, 0.39);
+}
+
+.svg-sidebar:hover {
+    filter: invert(50%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
+
+}

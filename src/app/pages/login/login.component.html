@@ -1,0 +1,126 @@
+<div class="bg-primary flex flex-row h-full">
+    <div class="h-full relative w-full">
+        <div class="flex h-full w-[56%] absolute top-0 left-0">
+            <img class="w-[100%]" src="Imagen Loguin.png" alt="login-image">
+        </div>
+        <div class="absolute degradado opacity-[85%] top-0 left-0 w-full h-full"></div>
+        <div class="absolute top-0 left-0 h-full flex flex-col w-[50%] pl-26 pr-30 justify-center">
+            <div class="mb-5">
+                <h1 class="text-[48px] font-semibold c-secondary">
+                    {{ !isRegister ? 'Iniciar sesión' : 'Registrarse'}}
+                </h1>
+            </div>
+            <div class="c-secondary mb-8">
+                <p class="text-default">
+                    {{ !isRegister ? 'Nos alegra tenerte de vuelta y estamos listos para atender tus necesidades. Inicia sesión y continúa aprovechando al máximo nuestra plataforma.' : '¡Bienvenido! Estamos encantados de que quieras unirte a nuestra plataforma. Regístrate y comienza a disfrutar de todas las ventajas que ofrecemos. No pierdas la oportunidad de ser parte de nuestra comunidad.' }}
+                </p>
+            </div>
+            <div>
+                <ul class="flex flex-col p-0 gap-5">
+                    <li class="flex flex-row">
+                        <div class="w-[24px] mr-3">
+                            <img src="icon-monitoring.png" alt="icon-login">
+                        </div>
+                        <div class="c-secondary">
+                            <p class="text-default">Monitoreo integral</p>
+                            <p class="text-xs font-light">Administra, monitorea mutiples plantas de forma centralizada
+                            </p>
+                        </div>
+                    </li>
+                    <li class="flex flex-row">
+                        <div class="w-[20px] mr-4">
+                            <img src="icon-star.png" alt="icon-login">
+                        </div>
+                        <div class="c-secondary">
+                            <p class="text-default">Notificaciones en tiempo real</p>
+                            <p class="text-xs font-light">Recibi notificaciones en tiempo real sobre las mediciones</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="bg-secondary flex flex-col justify-center px-24 h-full w-[50%] rounded-l-[40px] absolute top-0 left-[50%]">
+            <div class="mb-4">
+                <h1 class="text-3xl font-semibold p-primary-color">Portal de monitoreo</h1>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-xl font-[500] p-primary-color">{{!isRegister ? 'Iniciar sesión' : 'Registrarse'}}</h2>
+            </div>
+            <div class="mb-4">
+                <form action="" class="flex flex-col w-[86%] gap-4">
+                    <p *ngIf="isRegister" class="w-full">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Usuario</mat-label>
+                            <input [(ngModel)]="username" type="text" inputmode="username" matInput placeholder="Usuario" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                    </p>
+                    <p class="w-full">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input [(ngModel)]="email" type="email" inputmode="email" matInput placeholder="Email" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                    </p>
+                    <p class="w-full relative">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contraseña</mat-label>
+                            <input [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
+                            <div (click)="tooglePassword()" class="w-[20px] absolute top-3.5 left-[94%] bg-white">
+                                <img *ngIf="!passwordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
+                                <img *ngIf="passwordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
+                            </div>
+                        </mat-form-field>
+                    </p>
+                    <!-- REGISTER -->
+                    <p *ngIf="isRegister" class="w-full relative">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Repetir contraseña</mat-label>
+                            <input [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" matInput placeholder="Repetir contraseña" [ngModelOptions]="{standalone: true}">
+                            <div (click)="toogleRePassword()" class="w-[20px] absolute top-3.5 left-[94%] bg-white">
+                                <img *ngIf="!repasswordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
+                                <img *ngIf="repasswordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
+                            </div>
+                        </mat-form-field>
+                    </p>
+                    <!-- LOGIN -->
+                    <div *ngIf="!isRegister" class="flex flex-row justify-between items-center">
+                        <div class="w-[60%]">
+                            <p class="font-normal text-[14px] p-secondary-color">
+                                ¿Olvidaste tu contraseña?
+                            </p>
+                        </div>
+                        <div>
+                            <button type="button" class="tracking-wide text-[14px] text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none">
+                                Iniciar sesión
+                            </button>
+                        </div>
+                    </div>
+                    <!-- REGISTER -->
+                    <div *ngIf="isRegister" class="flex flex-row justify-between items-start">
+                        <div class="w-[60%]">
+                            <p class="font-normal text-[12px] p-gray-color ">
+                                -Al menos 10 caracteres y uno especial
+                            </p>
+                        </div>
+                        <div>
+                            <button type="button" class="tracking-wide text-[14px] text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none">
+                                Registrarse
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex flex-col w-[86%] mb-6">
+                <p class="p-gray-color font-normal text-[12px]">
+                    Protegido por reCAPTCHA y sujeto a la
+                    <a class="p-bluesky-color" href="">Política de Privacidad</a> y <a href="">Condiciones.</a>
+                </p>
+            </div>
+            <div>
+                <p class="p-secondary-color font-normal text-[14px]">
+                    {{!isRegister ? '¿No tienes una cuenta?':'¿Ya tienes una cuenta?'}}
+                    <a [routerLink]="[isRegister ? 'sign-in' : 'sign-up']" routerLinkActive="router-link-active"  class="p-bluesky-color ml-2" href="">{{!isRegister ? 'Registrarse':'Iniciar sesión'}}</a>
+                </p>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,68 @@
+
+.mat-mdc-form-field {
+    width: 100% !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-notched-outline__notch {
+    border-color: #b0b0b0 !important;
+    border-right: none;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-notched-outline__leading {
+    border-top-left-radius: 16px !important;
+    border-bottom-left-radius: 16px !important;
+    border-color: #b0b0b0 !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: #b0b0b0 !important;
+    border-top-right-radius: 16px !important;
+    border-bottom-right-radius: 16px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: 100% !important;
+}
+
+mat-form-field {
+    height: 46px;
+    display: flex;
+}
+
+mat-form-field mat-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #84818A;
+}
+
+mat-form-field input {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    color: #202020;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+mat-form-field label {
+    height: 100%;
+}
+
+mat-label {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.icon-eye-input {
+    filter: invert(53%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
+}
+
+.inputpasslogin {
+    border: 1px solid #DCDBDD;
+    color: #202020;
+}
