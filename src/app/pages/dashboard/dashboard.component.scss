@@ -67,3 +67,10 @@
     filter: invert(50%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
 
 }
+
+.card-sensor {
+    transition: linear 0.3s;
+}
+.card-sensor:hover {
+    filter: drop-shadow(var(--drop-shadow-md));
+}

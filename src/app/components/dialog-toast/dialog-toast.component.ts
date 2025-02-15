@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, model } from '@angular/core';
+import { Component, Inject, inject, model, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent, MatDialogActions, MatDialogClose, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -19,21 +19,28 @@ export interface DialogData {
         FormsModule,
         MatButtonModule,
         MatDialogContent,
-        MatDialogClose,
         CommonModule
   ],
   templateUrl: './dialog-toast.component.html',
   styleUrl: './dialog-toast.component.scss'
 })
-export class DialogToastComponent {
+export class DialogToastComponent implements OnInit {
 
-  readonly dialogRef = inject(MatDialogRef<DialogToastComponent>);
-    readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-    readonly type = model(this.data.type);
-    readonly msg = model(this.data.msg);
+  type: string = '';
+  msg: string = '';
+
+    constructor(
+        private currentDialog: MatDialogRef<DialogToastComponent>,
+        @Inject(MAT_DIALOG_DATA) public data:any,
+    ){}
+
+  ngOnInit(): void {
+    this.type = this.data.type;
+    this.msg = this.data.msg;
+  }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.currentDialog.close();
   }
 
 }
