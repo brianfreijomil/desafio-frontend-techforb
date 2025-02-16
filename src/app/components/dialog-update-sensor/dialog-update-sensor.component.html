@@ -1,0 +1,41 @@
+<mat-dialog-content>
+    <div class="pb-6">
+        <h2 class="text-[14px] font-medium p-primary-color">Editar sensor de "{{getSensorName(sensor.type)}}"</h2>
+    </div>
+    <form [formGroup]="formSensor">
+        <div class="flex flex-col gap-4 w-[330px]">
+            <div>
+                <label for="sensor_ok" class="block mb-2 text-[14px] font-medium label-form-color">
+                    Cantidad de lecturas OK
+                </label>
+                <input type="text" id="sensor_ok" formControlName="sensor_ok"
+                    class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
+                    placeholder="Ingrese" required />
+            </div>
+            <div>
+                <label for="medium_alerts" class="block mb-2 text-[14px] font-medium label-form-color">
+                    Alertas medias
+                </label>
+                <input type="text" id="medium_alerts" formControlName="medium_alerts"
+                    class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
+                    placeholder="Ingrese" required />
+            </div>
+            <div>
+                <label for="red_alerts" class="block mb-2 text-[14px] font-medium label-form-color">
+                    Alertas rojas
+                </label>
+                <input type="text" id="red_alerts" formControlName="red_alerts"
+                    class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
+                    placeholder="Ingrese nombre" required />
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center" class="gap-4">
+    <button (click)="onCancel()" type="button" class="button-dialog w-26 button-table button-stop-to-see-table tracking-wide text-[14px] text-white bg-primary font-medium ">
+        Cancelar
+    </button>
+    <button [disabled]="formSensor.invalid" (click)="updateSensor()" type="button" class="button-dialog w-26 button-table button-see-plant tracking-wide text-[14px] text-white bg-primary font-medium ">
+        Editar
+    </button>
+</mat-dialog-actions>

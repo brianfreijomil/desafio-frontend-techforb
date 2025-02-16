@@ -69,8 +69,56 @@
 }
 
 .card-sensor {
+    border: 1px solid transparent;
     transition: linear 0.3s;
 }
 .card-sensor:hover {
     filter: drop-shadow(var(--drop-shadow-md));
+    border: 1px solid rgba(51, 162, 170, 0.452);
+}
+
+.sensor-card-hover {
+    opacity: 0;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: linear 0.3s;
+}
+.sensor-card-hover:hover {
+    opacity: 1;
+    background-color: rgba(51, 162, 170, 0.192);
+}
+
+.button-sensor-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #33a2aaab;
+    cursor: pointer;
+}
+.bubutton-sensor-card:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #106f769b;
+}
+
+.button-sensor-card .mat-icon {
+    color: white !important;
+    fill: white !important;
+}
+
+.delete-btn .mat-icon {
+    color: rgba(255, 16, 16, 0.753) !important;
+    fill: white !important;
 }

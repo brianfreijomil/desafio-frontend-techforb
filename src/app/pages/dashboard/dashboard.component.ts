@@ -13,7 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogDeleteItemComponent } from '../../components/dialog-delete-item/dialog-delete-item.component';
-import { SensorIconEnum, SensorTypeEnum } from '../../interfaces/sensor';
+import { Sensor, SensorIconEnum, SensorTypeEnum, SensorUpdate } from '../../interfaces/sensor';
+import { DialogUpdateSensorComponent } from '../../components/dialog-update-sensor/dialog-update-sensor.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,12 @@ export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['country', 'name', 'read_ok', 'medium_alerts', 'red_alerts', 'actions'];
   userUsername: string = '';
+
+  disabledSensors: number = 0;
   summaryReadings: Reading[] = [];
+  summaryReadingOk: Reading | undefined = undefined; 
+  summaryReadingMediumAlert: Reading | undefined = undefined; 
+  summaryReadingRedAlert: Reading | undefined = undefined; 
 
   plants: Plant[] = [];
   plantSelected: Plant | undefined = undefined;
@@ -46,7 +52,12 @@ export class DashboardComponent implements OnInit {
   getSummaryReadings(): void {
     this.plantSrv.getSummaryReadings().subscribe({
       next: (response) => {
+        console.log(response);
         this.summaryReadings = response.readings;
+        this.summaryReadingOk = this.summaryReadings.find((r) => r.type === 'OK');
+        this.summaryReadingMediumAlert = this.summaryReadings.find((r) => r.type === 'MEDIUM');
+        this.summaryReadingRedAlert = this.summaryReadings.find((r) => r.type === 'RED');
+        this.disabledSensors = response.disabledSensors;
       },
       error: (err) => {
         if (err.status === 404) {
@@ -62,7 +73,6 @@ export class DashboardComponent implements OnInit {
   getPlantsByUser(): void {
     this.plantSrv.getPlantsByUser().subscribe({
       next: (response) => {
-        console.log(response)
         this.plants = response;
       },
       error: (err) => {
@@ -94,8 +104,32 @@ export class DashboardComponent implements OnInit {
         this.plants = this.plants.filter((p) => p.id !== result.id);
         this.plants = [...this.plants, result]
         let msg = plantToEdit ? "Planta editada con éxito" : "Planta creada con éxito";
-        console.log(msg);
         this.openDialogToast("SUCCESS", msg);
+      }
+    });
+  }
+
+  openDialogUpdateSensor(sensorToEdit: Sensor): void {
+    const dialogRef = this.dialog.open(DialogUpdateSensorComponent, {
+      data: sensorToEdit,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.plantSrv.getPlantsByUser().subscribe({
+          next: (response) => {
+            this.plants = response;
+            console.log("nueva",this.plants.find((p) => p.id === this.plantSelected?.id))
+            console.log("vieja", this.plantSelected)
+            this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
+          },
+          error: (err) => {
+            console.error('Get Plants Error', err);
+          },
+        });
+        this.getSummaryReadings();
+        this.openDialogToast("SUCCESS", "Sensor editado con éxito");
       }
     });
   }
@@ -125,31 +159,8 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  getTypeName(type: string) {
-    if (type) {
-      switch (type) {
-        case 'TEMPERATURE':
-          return SensorTypeEnum.TEMPERATURE;
-        case 'PRESSURE':
-          return SensorTypeEnum.PRESSURE;
-        case 'WIND':
-          return SensorTypeEnum.WIND;
-        case 'LEVELS':
-          return SensorTypeEnum.LEVELS;
-        case 'ENERGY':
-          return SensorTypeEnum.ENERGY;
-        case 'TENSION':
-          return SensorTypeEnum.TENSION;
-        case 'CO2':
-          return SensorTypeEnum.CO2;
-        case 'OTHER_GASES':
-          return SensorTypeEnum.OTHER_GASES;
-        default:
-          return 'Unknown';
-      }
-
-    }
-    return 'Unknown';
+  getSensorName(type: string) {
+    return this.utilSrv.getTypeName(type);
   }
 
   getUrlIcon(type: string) {

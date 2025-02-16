@@ -88,7 +88,7 @@
                     <div class="w-full h-full flex flex-row justify-between items-center">
                         <div class="flex flex-col justify-start items-start pl-4">
                             <p class="text-[12px] font-normal card-p-color">Lecturas OK</p>
-                            <p class="text-[20px] font-bold card-number-color">1234</p>
+                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingOk?.value || 0}}</p>
                         </div>
                         <div class="flex justify-center items-center pr-4">
                             <div class="h-[60px] w-[60px]">
@@ -101,7 +101,7 @@
                     <div class="w-full h-full flex flex-row justify-between items-center">
                         <div class="flex flex-col justify-start items-start pl-4">
                             <p class="text-[12px] font-normal card-p-color">Alertas medias</p>
-                            <p class="text-[20px] font-bold card-number-color">932</p>
+                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingMediumAlert?.value || 0}}</p>
                         </div>
                         <div class="flex justify-center items-center pr-4">
                             <div class="h-[60px] w-[60px]">
@@ -114,7 +114,7 @@
                     <div class="w-full h-full flex flex-row justify-between items-center">
                         <div class="flex flex-col justify-start items-start pl-4">
                             <p class="text-[12px] font-normal card-p-color">Alertas rojas</p>
-                            <p class="text-[20px] font-bold card-number-color">932</p>
+                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingRedAlert?.value || 0}}</p>
                         </div>
                         <div class="flex justify-center items-center pr-4">
                             <div class="h-[60px] w-[60px]">
@@ -127,7 +127,7 @@
                     <div class="w-full h-full flex flex-row justify-between items-center">
                         <div class="flex flex-col justify-start items-start pl-4">
                             <p class="text-[12px] font-normal card-p-color">Sensores deshabilitados</p>
-                            <p class="text-[20px] font-bold card-number-color">932</p>
+                            <p class="text-[20px] font-bold card-number-color">{{disabledSensors || 0}}</p>
                         </div>
                         <div class="flex justify-center items-center pr-4">
                             <div class="h-[60px] w-[60px]">
@@ -252,10 +252,18 @@
                     <p class="text-[14px] font-normal ">para mostrar resultados.</p>
                 </div>
                 <div *ngIf="plantSelected" class="w-full flex flex-row justify-between flex-wrap gap-y-4">
-                    <aside *ngFor="let sensor of plantSelected.sensors" class="cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
+                    <aside (click)="openDialogUpdateSensor(sensor)" *ngFor="let sensor of plantSelected.sensors" class="relative cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
+                        <div class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
+                            <button class="button-sensor-card">
+                                <mat-icon >edit</mat-icon>
+                            </button>
+                            <button class="button-sensor-card delete-btn">
+                                <mat-icon>delete_outline</mat-icon>
+                            </button>
+                        </div>
                         <div class="w-full h-full flex flex-row justify-between items-center">
                             <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">{{getTypeName(sensor.type)}}</p>
+                                <p class="text-[12px] font-normal card-p-color">{{getSensorName(sensor.type)}}</p>
                                 <div class="flex flex-row gap-3">
                                     <div class="flex flex-row gap-1 items-center">
                                         <div class="h-[14px] w-[14px]">
@@ -290,310 +298,6 @@
                             </div>
                         </div>
                     </aside>
-                    <!-- <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Temperatura</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-temperature.svg" alt="icon-temperature-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Presión</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-presion.svg" alt="icon-presion-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Viento</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-wind.svg" alt="icon-wind-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Niveles</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-levels.svg" alt="icon-levels-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Energía</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-energy.svg" alt="icon-energy-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Tensión</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-tension.svg" alt="icon-tension-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">Monóxido de carbono</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-co2.svg" alt="icon-co2-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4 gap-2">
-                                <p class="text-[12px] font-normal card-p-color">Otros gases</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">100</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">20</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">2</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img src="icon-gases.svg" alt="icon-gases-svg">
-                                </div>
-                            </div>
-                        </div>
-                    </aside> -->
                 </div>
             </article>
         </main>

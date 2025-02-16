@@ -24,5 +24,32 @@ export class UtilsService {
     return localStorage.getItem("email");
   }
 
+  getTypeName(type: string) {
+    if (type) {
+      switch (type) {
+        case 'TEMPERATURE':
+          return SensorTypeEnum.TEMPERATURE;
+        case 'PRESSURE':
+          return SensorTypeEnum.PRESSURE;
+        case 'WIND':
+          return SensorTypeEnum.WIND;
+        case 'LEVELS':
+          return SensorTypeEnum.LEVELS;
+        case 'ENERGY':
+          return SensorTypeEnum.ENERGY;
+        case 'TENSION':
+          return SensorTypeEnum.TENSION;
+        case 'CO2':
+          return SensorTypeEnum.CO2;
+        case 'OTHER_GASES':
+          return SensorTypeEnum.OTHER_GASES;
+        default:
+          return 'Unknown';
+      }
+
+    }
+    return 'Unknown';
+  }
+
 
 }
