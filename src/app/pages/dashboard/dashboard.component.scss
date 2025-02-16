@@ -102,15 +102,10 @@
     border-radius: 50%;
     background-color: #33a2aaab;
     cursor: pointer;
+    transition: linear 0.3s;
 }
-.bubutton-sensor-card:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #106f769b;
+.button-sensor-card:hover {
+    background-color: #1c8b93d7;
 }
 
 .button-sensor-card .mat-icon {

@@ -1,13 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { PlantService } from '../../services/plant.service';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
-import { Plant } from '../../interfaces/plant';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatOption } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-delete-item',

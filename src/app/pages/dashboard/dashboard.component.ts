@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DialogDeleteItemComponent } from '../../components/dialog-delete-item/dialog-delete-item.component';
 import { Sensor, SensorIconEnum, SensorTypeEnum, SensorUpdate } from '../../interfaces/sensor';
 import { DialogUpdateSensorComponent } from '../../components/dialog-update-sensor/dialog-update-sensor.component';
+import { DialogDisableEnableItemComponent } from '../../components/dialog-disable-enable-item/dialog-disable-enable-item.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +28,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['country', 'name', 'read_ok', 'medium_alerts', 'red_alerts', 'actions'];
   userUsername: string = '';
 
-  disabledSensors: number = 0;
+  sensorsDisabled: number = 0;
   summaryReadings: Reading[] = [];
   summaryReadingOk: Reading | undefined = undefined; 
   summaryReadingMediumAlert: Reading | undefined = undefined; 
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit {
         this.summaryReadingOk = this.summaryReadings.find((r) => r.type === 'OK');
         this.summaryReadingMediumAlert = this.summaryReadings.find((r) => r.type === 'MEDIUM');
         this.summaryReadingRedAlert = this.summaryReadings.find((r) => r.type === 'RED');
-        this.disabledSensors = response.disabledSensors;
+        this.sensorsDisabled = response.sensorsDisabled;
       },
       error: (err) => {
         if (err.status === 404) {
@@ -73,6 +74,7 @@ export class DashboardComponent implements OnInit {
   getPlantsByUser(): void {
     this.plantSrv.getPlantsByUser().subscribe({
       next: (response) => {
+        console.log(response)
         this.plants = response;
       },
       error: (err) => {
@@ -100,7 +102,8 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result) { //planta creada con exito
+        //this.getSummaryReadings();
         this.plants = this.plants.filter((p) => p.id !== result.id);
         this.plants = [...this.plants, result]
         let msg = plantToEdit ? "Planta editada con éxito" : "Planta creada con éxito";
@@ -116,12 +119,9 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.plantSrv.getPlantsByUser().subscribe({
           next: (response) => {
             this.plants = response;
-            console.log("nueva",this.plants.find((p) => p.id === this.plantSelected?.id))
-            console.log("vieja", this.plantSelected)
             this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
           },
           error: (err) => {
@@ -148,6 +148,31 @@ export class DashboardComponent implements OnInit {
         if (result) {
           this.plants = this.plants.filter((p) => p.id !== plantToDelete.id)
           this.openDialogToast("SUCCESS", "Planta eliminada con éxito");
+        }
+      });
+    }
+
+  }
+
+  openDialogDisableEnableSensor(sensorToEdit: Sensor): void {
+    if (sensorToEdit) {
+      const dialogRef = this.dialog.open(DialogDisableEnableItemComponent, {
+        data: sensorToEdit
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.plantSrv.getPlantsByUser().subscribe({
+            next: (response) => {
+              this.plants = response;
+              this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
+            },
+            error: (err) => {
+              console.error('Get Plants Error', err);
+            },
+          });
+          this.getSummaryReadings();
+          this.openDialogToast("SUCCESS", `Planta ${result.isEnabled ? 'habilitada':'deshabilitada'} con éxito`);
         }
       });
     }

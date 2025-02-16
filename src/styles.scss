@@ -49,6 +49,14 @@
     background-color: rgba(51, 162, 170, 0.598);
 }
 
+.p-red {
+    color: rgba(255, 16, 16, 0.753);
+}
+
+.skew-text {
+    transform: skew(-10deg);
+  }
+
 .bg-red {
     background-color: rgba(255, 16, 16, 0.753);
 }
@@ -117,4 +125,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .label-form-color {
     color: rgba(131, 139, 158, 1);
+}
+
+.button-dialog {
+    padding: 8px 0 8px 0;
 }

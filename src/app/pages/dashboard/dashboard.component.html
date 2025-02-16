@@ -127,7 +127,7 @@
                     <div class="w-full h-full flex flex-row justify-between items-center">
                         <div class="flex flex-col justify-start items-start pl-4">
                             <p class="text-[12px] font-normal card-p-color">Sensores deshabilitados</p>
-                            <p class="text-[20px] font-bold card-number-color">{{disabledSensors || 0}}</p>
+                            <p class="text-[20px] font-bold card-number-color">{{sensorsDisabled || 0}}</p>
                         </div>
                         <div class="flex justify-center items-center pr-4">
                             <div class="h-[60px] w-[60px]">
@@ -252,14 +252,21 @@
                     <p class="text-[14px] font-normal ">para mostrar resultados.</p>
                 </div>
                 <div *ngIf="plantSelected" class="w-full flex flex-row justify-between flex-wrap gap-y-4">
-                    <aside (click)="openDialogUpdateSensor(sensor)" *ngFor="let sensor of plantSelected.sensors" class="relative cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
+                    <aside *ngFor="let sensor of plantSelected.sensors" class="relative cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
                         <div class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
-                            <button class="button-sensor-card">
-                                <mat-icon >edit</mat-icon>
-                            </button>
-                            <button class="button-sensor-card delete-btn">
-                                <mat-icon>delete_outline</mat-icon>
-                            </button>
+                            <div *ngIf="sensor.isEnabled" class="flex flex-col justify-around items-center">
+                                <button (click)="openDialogUpdateSensor(sensor)" class="button-sensor-card">
+                                    <mat-icon >edit</mat-icon>
+                                </button>
+                                <p class="text-xs font-medium p-primary-color">Editar</p>
+                            </div>
+                            <div class="flex flex-col justify-around items-center">
+                                <button (click)="openDialogDisableEnableSensor(sensor)" class="button-sensor-card">
+                                    <mat-icon *ngIf="sensor.isEnabled">visibility_off</mat-icon>
+                                    <mat-icon *ngIf="!sensor.isEnabled">visibility</mat-icon>
+                                </button>
+                                <p class="text-xs font-medium p-primary-color">{{sensor.isEnabled ? 'Deshabilitar':'Habilitar'}}</p>
+                            </div>
                         </div>
                         <div class="w-full h-full flex flex-row justify-between items-center">
                             <div class="flex flex-col justify-start items-start pl-4">
@@ -290,6 +297,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <p class="text-[12px] font-medium skew-text p-red" *ngIf="!sensor.isEnabled">Deshabilitado</p>
                             </div>
                             <div class="flex justify-center items-center pr-4">
                                 <div class="h-[60px] w-[60px]">
