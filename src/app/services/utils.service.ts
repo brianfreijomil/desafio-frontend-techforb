@@ -24,6 +24,14 @@ export class UtilsService {
     return localStorage.getItem("email");
   }
 
+  validateEmail(email: string) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+  }
+
+  validatePassword(pass: string) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d !"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]{8,}$/.test(pass);
+  }
+
   getTypeName(type: string) {
     if (type) {
       switch (type) {

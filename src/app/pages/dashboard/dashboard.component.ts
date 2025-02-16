@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { DialogCreatePlantComponent } from '../../components/dialog-create-plant/dialog-create-plant.component';
@@ -16,6 +16,7 @@ import { DialogDeleteItemComponent } from '../../components/dialog-delete-item/d
 import { Sensor, SensorIconEnum, SensorTypeEnum, SensorUpdate } from '../../interfaces/sensor';
 import { DialogUpdateSensorComponent } from '../../components/dialog-update-sensor/dialog-update-sensor.component';
 import { DialogDisableEnableItemComponent } from '../../components/dialog-disable-enable-item/dialog-disable-enable-item.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,6 +41,8 @@ export class DashboardComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   constructor(
+    private router: Router,
+    private authSrv: AuthService,
     private plantSrv: PlantService,
     private utilSrv: UtilsService
   ) { }
@@ -186,6 +189,15 @@ export class DashboardComponent implements OnInit {
 
   getSensorName(type: string) {
     return this.utilSrv.getTypeName(type);
+  }
+
+  goProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  logout() {
+    this.authSrv.logout()
+    this.router.navigate(['/sign_in']);
   }
 
   getUrlIcon(type: string) {

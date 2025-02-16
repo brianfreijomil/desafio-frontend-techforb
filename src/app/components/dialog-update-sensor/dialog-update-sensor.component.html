@@ -8,25 +8,43 @@
                 <label for="sensor_ok" class="block mb-2 text-[14px] font-medium label-form-color">
                     Cantidad de lecturas OK
                 </label>
-                <input type="text" id="sensor_ok" formControlName="sensor_ok"
-                    class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
+                <input [ngClass]="{'input-form-dialog-error': formSensor.controls['sensor_ok'].errors?.['max'] || formSensor.controls['sensor_ok'].errors?.['pattern']}" type="text" id="sensor_ok" formControlName="sensor_ok"
+                    class=" bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
                     placeholder="Ingrese" required />
+                    <p *ngIf="formSensor.controls['sensor_ok'].errors?.['max']" class="p-red text-xs mt-1">
+                        El valor máximo a configurar es de 1000.
+                    </p>
+                    <p *ngIf="formSensor.controls['sensor_ok'].errors?.['pattern']" class="text-red-500 text-xs mt-1">
+                        Solo se permiten números enteros.
+                    </p>
             </div>
             <div>
                 <label for="medium_alerts" class="block mb-2 text-[14px] font-medium label-form-color">
                     Alertas medias
                 </label>
-                <input type="text" id="medium_alerts" formControlName="medium_alerts"
+                <input [ngClass]="{'input-form-dialog-error': formSensor.controls['medium_alerts'].errors?.['max'] || formSensor.controls['medium_alerts'].errors?.['pattern']}" type="text" id="medium_alerts" formControlName="medium_alerts"
                     class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
                     placeholder="Ingrese" required />
+                    <p *ngIf="formSensor.controls['medium_alerts'].errors?.['max']" class="p-red text-xs mt-1">
+                        El valor máximo a configurar es de 1000.
+                    </p>
+                    <p *ngIf="formSensor.controls['medium_alerts'].errors?.['pattern']" class="text-red-500 text-xs mt-1">
+                        Solo se permiten números enteros.
+                    </p>
             </div>
             <div>
                 <label for="red_alerts" class="block mb-2 text-[14px] font-medium label-form-color">
                     Alertas rojas
                 </label>
-                <input type="text" id="red_alerts" formControlName="red_alerts"
+                <input [ngClass]="{'input-form-dialog-error': formSensor.controls['red_alerts'].errors?.['max'] || formSensor.controls['red_alerts'].errors?.['pattern']}" type="text" id="red_alerts" formControlName="red_alerts"
                     class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-[14px] rounded-lg block w-full p-2.5"
                     placeholder="Ingrese nombre" required />
+                    <p *ngIf="formSensor.controls['red_alerts'].errors?.['max']" class="p-red text-xs mt-1">
+                        El valor máximo a configurar es de 1000.
+                    </p>
+                    <p *ngIf="formSensor.controls['red_alerts'].errors?.['pattern']" class="text-red-500 text-xs mt-1">
+                        Solo se permiten números enteros.
+                    </p>
             </div>
         </div>
     </form>

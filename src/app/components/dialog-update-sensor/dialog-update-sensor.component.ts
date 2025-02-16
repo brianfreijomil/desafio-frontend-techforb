@@ -1,21 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, Inject, inject, model, OnInit, signal} from '@angular/core';
-import {FormGroup, FormsModule, Validators, FormBuilder} from '@angular/forms';
+import { Component, Inject, OnInit, } from '@angular/core';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
-import { Plant, PlantOut } from '../../interfaces/plant';
-import { PlantService } from '../../services/plant.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SensorService } from '../../services/sensor.service';
 import { Sensor, SensorUpdate } from '../../interfaces/sensor';
@@ -49,9 +43,9 @@ export class DialogUpdateSensorComponent implements OnInit {
     private fb:FormBuilder,
   ){
     this.formSensor = this.fb.group({
-      sensor_ok: ["",Validators.required],
-      medium_alerts: ["",Validators.required],
-      red_alerts: ["",Validators.required],
+      sensor_ok: ["",[Validators.required,Validators.max(1000),Validators.pattern("^[0-9]+$")]],
+      medium_alerts: ["",[Validators.required,Validators.max(1000),Validators.pattern("^[0-9]+$")]],
+      red_alerts: ["",[Validators.required,Validators.max(1000),Validators.pattern("^[0-9]+$")]],
     })
   }
   ngOnInit(): void {

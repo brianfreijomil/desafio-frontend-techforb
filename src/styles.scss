@@ -50,7 +50,7 @@
 }
 
 .p-red {
-    color: rgba(255, 16, 16, 0.753);
+    color: rgb(255, 16, 16);
 }
 
 .skew-text {
@@ -129,4 +129,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .button-dialog {
     padding: 8px 0 8px 0;
+}
+
+input.input-form-dialog-error {
+    border: 1px solid red !important;
+}
+input.input-form-dialog-error:focus-visible {
+    outline: none !important;
+    border: 2px solid red !important;
+    border-color: red !important; 
 }

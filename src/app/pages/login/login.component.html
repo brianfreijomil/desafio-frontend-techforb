@@ -48,31 +48,40 @@
                 <h2 class="text-xl font-[500] p-primary-color">{{!isRegister ? 'Iniciar sesión' : 'Registrarse'}}</h2>
             </div>
             <div class="mb-4">
-                <form action="" class="flex flex-col w-[86%] gap-4">
-                    <p *ngIf="isRegister" class="w-full">
+                <form class="flex flex-col w-[86%]">
+                    <p *ngIf="isRegister" class="w-full mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Usuario</mat-label>
-                            <input [(ngModel)]="username" type="text" inputmode="username" matInput placeholder="Usuario" [ngModelOptions]="{standalone: true}">
+                            <input (input)="msgErrorUsername = ''" [(ngModel)]="username" type="text" inputmode="username" matInput placeholder="Usuario" [ngModelOptions]="{standalone: true}">
+                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                                {{msgErrorUsername}}
+                            </p>
                         </mat-form-field>
                     </p>
-                    <p class="w-full">
+                    <p class="w-full mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Email</mat-label>
-                            <input [(ngModel)]="email" type="email" inputmode="email" matInput placeholder="Email" [ngModelOptions]="{standalone: true}">
+                            <input (input)="msgErrorEmail = ''" [(ngModel)]="email" type="email" inputmode="email" matInput placeholder="Email" [ngModelOptions]="{standalone: true}">
+                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                                {{msgErrorEmail}}
+                            </p>
                         </mat-form-field>
                     </p>
-                    <p class="w-full relative">
+                    <p class="w-full relative mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Contraseña</mat-label>
-                            <input [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
+                            <input (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
                             <div (click)="tooglePassword()" class="w-[20px] absolute top-3.5 left-[94%] bg-white">
                                 <img *ngIf="!passwordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="passwordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                             </div>
+                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                                {{msgErrorPass}}
+                            </p>
                         </mat-form-field>
                     </p>
                     <!-- REGISTER -->
-                    <p *ngIf="isRegister" class="w-full relative">
+                    <p *ngIf="isRegister" class="w-full relative mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Repetir contraseña</mat-label>
                             <input [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" matInput placeholder="Repetir contraseña" [ngModelOptions]="{standalone: true}">
@@ -80,6 +89,9 @@
                                 <img *ngIf="!repasswordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="repasswordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                             </div>
+                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                                {{msgErrorRePass || msgError || ''}}
+                            </p>
                         </mat-form-field>
                     </p>
                     <!-- LOGIN -->
@@ -90,7 +102,7 @@
                             </p>
                         </div>
                         <div>
-                            <button (click)="signin()" type="button" class="tracking-wide text-[14px] text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
+                            <button (click)="signin()" type="button" class="tracking-wide text-[14px] text-white bg-primary font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
                                 Iniciar sesión
                             </button>
                         </div>
@@ -99,11 +111,11 @@
                     <div *ngIf="isRegister" class="flex flex-row justify-between items-start">
                         <div class="w-[60%]">
                             <p class="font-normal text-[12px] p-gray-color ">
-                                -Al menos 10 caracteres y uno especial
+                                -Al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial
                             </p>
                         </div>
                         <div>
-                            <button (click)="signup()" type="button" class="tracking-wide text-[14px] text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
+                            <button (click)="signup()" type="button" class="tracking-wide text-[14px] text-white bg-primary font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
                                 Registrarse
                             </button>
                         </div>
