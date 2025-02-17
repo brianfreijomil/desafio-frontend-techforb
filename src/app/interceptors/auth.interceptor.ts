@@ -9,7 +9,7 @@ export const authInterceptorFn: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const token = authService.getToken();
-  const utilSrv = inject(UtilsService)
+  const utilSrv = inject(UtilsService);
 
   if (token) {
     const authReq = req.clone({
@@ -17,16 +17,17 @@ export const authInterceptorFn: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${token}`
       },
     });
+
     return next(authReq).pipe(
       catchError((error) => {
-        console.log("ea",error);
         if (error.status === 401) {
           authService.logout();
           router.navigate(['/sign_in']);
         }
-        return next(req)
+        return throwError(() => error);
       })
-    )
+    );
   }
+
   return next(req);
-}
+};

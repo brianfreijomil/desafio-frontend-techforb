@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy, Component, Inject, inject, model, OnInit, signal} from '@angular/core';
-import {FormGroup, FormsModule, Validators, FormBuilder} from '@angular/forms';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -43,6 +40,11 @@ export class DialogCreatePlantComponent implements OnInit {
 
   titleAction:string = 'Crear nueva planta'
   btnAction:string = 'Crear';
+
+  msgError:string = '';
+  saveFailed:boolean = false;
+
+
 
   countries: any[] = [
     {value: 'Argentina', viewValue: 'Argentina'},
@@ -81,6 +83,9 @@ export class DialogCreatePlantComponent implements OnInit {
   }
 
   savePlant() {
+    this.msgError = '';
+    this.saveFailed = false;
+
     //item to save
     const plantSaved:PlantOut = {
       name: this.formPlant.value.name,
@@ -96,23 +101,32 @@ export class DialogCreatePlantComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log("err",err);
-          this.currentDialog.close(undefined);
+          this.saveFailed = true
+          if (err.status >= 400) {
+            this.msgError = err.error.message;
+          } else {
+            this.msgError = err.error?.message || '';
+            // console.log(err);
+          }
         }
       })
     } else {
       //UPDATE
-      this.plantSrv.updatePlant(this.plant.id,plantSaved).subscribe({
-        next: (result) => {
-          if (result) {
-            this.currentDialog.close(result)
+      if (plantSaved.name == this.plant.name && plantSaved.country == this.plant.country) {
+        this.currentDialog.close();
+      } else {
+        this.plantSrv.updatePlant(this.plant.id,plantSaved).subscribe({
+          next: (result) => {
+            if (result) {
+              this.currentDialog.close(result)
+            }
+          },
+          error: (err) => {
+            // console.log(err);
+            this.currentDialog.close(undefined);
           }
-        },
-        error: (err) => {
-          console.log("err",err);
-          this.currentDialog.close(undefined);
-        }
-      })
+        })
+      }
     }
   }
 

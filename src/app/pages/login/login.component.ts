@@ -107,7 +107,6 @@ export class LoginComponent {
       }
       this.authSrv.signup(req).subscribe({
         next: (response) => {
-          console.log(response)
           this.utilSrv.saveEmail(response.email);
           this.utilSrv.saveUsername(response.username);
           this.authSrv.saveToken(response.jwt);

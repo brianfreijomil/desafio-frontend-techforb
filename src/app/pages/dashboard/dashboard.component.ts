@@ -56,19 +56,19 @@ export class DashboardComponent implements OnInit {
   getSummaryReadings(): void {
     this.plantSrv.getSummaryReadings().subscribe({
       next: (response) => {
-        console.log(response);
-        this.summaryReadings = response.readings;
-        this.summaryReadingOk = this.summaryReadings.find((r) => r.type === 'OK');
-        this.summaryReadingMediumAlert = this.summaryReadings.find((r) => r.type === 'MEDIUM');
-        this.summaryReadingRedAlert = this.summaryReadings.find((r) => r.type === 'RED');
-        this.sensorsDisabled = response.sensorsDisabled;
+        if (response) {
+          this.summaryReadings = response.readings || [];
+          this.summaryReadingOk = this.summaryReadings.find((r) => r.type === 'OK');
+          this.summaryReadingMediumAlert = this.summaryReadings.find((r) => r.type === 'MEDIUM');
+          this.summaryReadingRedAlert = this.summaryReadings.find((r) => r.type === 'RED');
+          this.sensorsDisabled = response.sensorsDisabled;
+        }
       },
       error: (err) => {
         if (err.status === 404) {
           //no tiene resumen
-          console.log("sin resumen")
         } else {
-          console.error('Get SummaryReadings Error', err);
+          console.error(err);
         }
       },
     });
@@ -77,11 +77,10 @@ export class DashboardComponent implements OnInit {
   getPlantsByUser(): void {
     this.plantSrv.getPlantsByUser().subscribe({
       next: (response) => {
-        console.log(response)
         this.plants = response;
       },
       error: (err) => {
-        console.error('Get Plants Error', err);
+        console.error(err);
       },
     });
   }

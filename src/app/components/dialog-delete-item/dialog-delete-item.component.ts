@@ -32,7 +32,6 @@ export class DialogDeleteItemComponent implements OnInit {
 
   deletePlant(): void {
     if (this.data) {
-      console.log("id",this.data.plantId)
       this.plantSrv.deletePlant(this.data.plantId).subscribe({
         next: (response) => {
           this.currentDialog.close(true);
