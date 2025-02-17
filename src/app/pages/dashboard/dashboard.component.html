@@ -1,360 +1,241 @@
-<div class="h-full w-full flex bg-dashboard">
-    <div class="h-full w-[80px] sidebar shadow-2xl shadow-r">
-        <div class="w-full flex items-center justify-center py-6">
-            <div class="h-[32px] w-[36px]">
-                <img src="Logo.svg" alt="logo-icon">
-            </div>
-        </div>
-        <div class="mt-12">
-            <ul class="p-0 flex flex-col w-full">
-                <li class="w-full flex items-center justify-center pb-8">
-                    <a [routerLink]="['dashboard']" class="cursor-pointer">
-                        <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Dashboard.svg" alt="dashboard-icon">
-                        </div>
-                    </a>
-                </li>
-                <li class="w-full flex items-center justify-center pb-8">
-                    <a [routerLink]="['dashboard']" class="cursor-pointer">
-                        <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Monitoreo por planta.svg" alt="dashboard-icon">
-                        </div>
-                    </a>
-                </li>
-                <li class="w-full flex items-center justify-center pb-8">
-                    <a [routerLink]="['dashboard']" class="cursor-pointer">
-                        <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Histórico de sensores.svg" alt="dashboard-icon">
-                        </div>
-                    </a>
-                </li>
-                <li class="w-full flex items-center justify-center pb-8">
-                    <a [routerLink]="['dashboard']" class="cursor-pointer">
-                        <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Históricodeplantas.svg" alt="dashboard-icon">
-                        </div>
-                    </a>
-                </li>
-                <li class="w-full flex items-center justify-center pb-8">
-                    <a (click)="logout()" class="cursor-pointer">
-                        <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Cerrarsesión.svg" alt="dashboard-icon">
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-    <div class="pl-6 pt-8 pr-16 w-full h-full overflow-y-auto ">
-        <header class=" flex flex-row justify-between items-center w-full pb-3">
-            <div>
-                <div>
-                    <h1 class="text-[30px] font-medium py-1">Monitoreo global</h1>
+<main class="w-full flex flex-col gap-4">
+    <article class="w-full flex flex-row justify-between ">
+        <aside class="h-[90px] w-[256px] bg-white rounded-xl">
+            <div class="w-full h-full flex flex-row justify-between items-center">
+                <div class="flex flex-col justify-start items-start pl-4">
+                    <p class="text-[12px] font-normal card-p-color">Lecturas OK</p>
+                    <p class="text-[20px] font-bold card-number-color">{{summaryReadingOk?.value || 0}}</p>
+                </div>
+                <div class="flex justify-center items-center pr-4">
+                    <div class="h-[60px] w-[60px]">
+                        <img src="ok_icon.svg" alt="ok-icon-svg">
+                    </div>
                 </div>
             </div>
-            <div>
-                <nav>
-                    <ul class="p-0 flex flex-row justify-between gap-4">
-                        <li class="cursor-pointer pt-1">
-                            <div [matMenuTriggerFor]="menuLenguage" class="h-[20px] w-[20px]">
-                                <img src="Idioma.svg" alt="lenguage-icon-svg">
-                            </div>
-                            <mat-menu #menuLenguage="matMenu" xPosition="before">
-                                <button mat-menu-item (click)="goProfile()">
-                                    <mat-icon>translate</mat-icon>
-                                    <span class="text-xs ">Español</span>
-                                </button>
-                                <button mat-menu-item (click)="logout()">
-                                    <mat-icon>translate</mat-icon>
-                                    <span class="text-xs ">Ingles</span>
-                                </button>
-                            </mat-menu>
-                        </li>
-                        <li class="cursor-pointer pt-1">
-                            <div [matMenuTriggerFor]="menuSettings" class="h-[20px] w-[20px]">
-                                <img src="Ajustes.svg" alt="lenguage-icon-svg">
-                            </div>
-                            <mat-menu #menuSettings="matMenu" xPosition="before">
-                                <button mat-menu-item class="cursor-text">
-                                    <mat-icon>tag_faces</mat-icon>
-                                    <span class="text-xs ">Estamos trabajando en esta funcionalidad!</span>
-                                </button>
-                            </mat-menu>
-                        </li>
-                        <li class="cursor-pointer">
-                            <div [matMenuTriggerFor]="menuNotifications" class="h-[20px] w-[20px]">
-                                <img src="notification.svg" alt="lenguage-icon-svg">
-                            </div>
-                            <mat-menu #menuNotifications="matMenu" xPosition="before">
-                                <button mat-menu-item class="cursor-text">
-                                    <mat-icon>tag_faces</mat-icon>
-                                    <span class="text-xs ">Estamos trabajando en esta funcionalidad!</span>
-                                </button>
-                            </mat-menu>
-                        </li>
-                        <li class="cursor-pointer">
-                            <div [matMenuTriggerFor]="menuProfile">
-                                <p class="text-[18px] font-semibold">
-                                    {{userUsername}}
-                                </p>
-                            </div>
-                            <mat-menu #menuProfile="matMenu" xPosition="before">
-                                <button mat-menu-item (click)="goProfile()">
-                                    <mat-icon>account_circle</mat-icon>
-                                    <span class="text-xs ">Ver perfil</span>
-                                </button>
-                                <button mat-menu-item (click)="logout()">
-                                    <mat-icon>logout</mat-icon>
-                                    <span class="text-xs ">Cerrar sesión</span>
-                                </button>
-                            </mat-menu>
-                        </li>
-                    </ul>
-                </nav>
+        </aside>
+        <aside class="h-[90px] w-[256px] bg-white rounded-xl">
+            <div class="w-full h-full flex flex-row justify-between items-center">
+                <div class="flex flex-col justify-start items-start pl-4">
+                    <p class="text-[12px] font-normal card-p-color">Alertas medias</p>
+                    <p class="text-[20px] font-bold card-number-color">{{summaryReadingMediumAlert?.value || 0}}
+                    </p>
+                </div>
+                <div class="flex justify-center items-center pr-4">
+                    <div class="h-[60px] w-[60px]">
+                        <img src="warning_icon.svg" alt="warning-icon-svg">
+                    </div>
+                </div>
             </div>
-        </header>
-        <main class="w-full flex flex-col gap-4">
-            <article class="w-full flex flex-row justify-between ">
-                <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                    <div class="w-full h-full flex flex-row justify-between items-center">
-                        <div class="flex flex-col justify-start items-start pl-4">
-                            <p class="text-[12px] font-normal card-p-color">Lecturas OK</p>
-                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingOk?.value || 0}}</p>
-                        </div>
-                        <div class="flex justify-center items-center pr-4">
-                            <div class="h-[60px] w-[60px]">
-                                <img src="ok_icon.svg" alt="ok-icon-svg">
-                            </div>
-                        </div>
+        </aside>
+        <aside class="h-[90px] w-[256px] bg-white rounded-xl">
+            <div class="w-full h-full flex flex-row justify-between items-center">
+                <div class="flex flex-col justify-start items-start pl-4">
+                    <p class="text-[12px] font-normal card-p-color">Alertas rojas</p>
+                    <p class="text-[20px] font-bold card-number-color">{{summaryReadingRedAlert?.value || 0}}
+                    </p>
+                </div>
+                <div class="flex justify-center items-center pr-4">
+                    <div class="h-[60px] w-[60px]">
+                        <img src="danger_icon.svg" alt="danger-icon-svg">
                     </div>
-                </aside>
-                <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                    <div class="w-full h-full flex flex-row justify-between items-center">
-                        <div class="flex flex-col justify-start items-start pl-4">
-                            <p class="text-[12px] font-normal card-p-color">Alertas medias</p>
-                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingMediumAlert?.value || 0}}
-                            </p>
-                        </div>
-                        <div class="flex justify-center items-center pr-4">
-                            <div class="h-[60px] w-[60px]">
-                                <img src="warning_icon.svg" alt="warning-icon-svg">
-                            </div>
-                        </div>
+                </div>
+            </div>
+        </aside>
+        <aside class="h-[90px] w-[256px] bg-white rounded-xl">
+            <div class="w-full h-full flex flex-row justify-between items-center">
+                <div class="flex flex-col justify-start items-start pl-4">
+                    <p class="text-[12px] font-normal card-p-color">Sensores deshabilitados</p>
+                    <p class="text-[20px] font-bold card-number-color">{{sensorsDisabled || 0}}</p>
+                </div>
+                <div class="flex justify-center items-center pr-4">
+                    <div class="h-[60px] w-[60px]">
+                        <img src="disabled_icon.svg" alt="disabled-icon-svg">
                     </div>
-                </aside>
-                <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                    <div class="w-full h-full flex flex-row justify-between items-center">
-                        <div class="flex flex-col justify-start items-start pl-4">
-                            <p class="text-[12px] font-normal card-p-color">Alertas rojas</p>
-                            <p class="text-[20px] font-bold card-number-color">{{summaryReadingRedAlert?.value || 0}}
-                            </p>
+                </div>
+            </div>
+        </aside>
+    </article>
+    <article
+        class="relative w-full flex flex-col justify-between rounded-xl bg-white p-3 h-[56vh] overflow-y-auto">
+        <div class="header-table mx-4 flex flex-row justify-start items-center gap-6 py-4">
+            <div>
+                <h2 class="text-[16px] font-semibold">
+                    Plantas
+                </h2>
+            </div>
+            <div *ngIf="showAuthorizedOption()">
+                <button (click)="openDialogCreateUpdatePlant()"
+                    class="rounded-sm py-1 px-4 b-add-plant text-[12px] font-medium cursor-pointer ">
+                    + Crear nueva planta
+                </button>
+            </div>
+        </div>
+        <div *ngIf="plants.length == 0" class="absolute top-[56%] left-[36%]">
+            <p *ngIf="showAuthorizedOption()" class="text-[14px] p-bluesky-color ">Cree una planta para comenzar.</p>
+        </div>
+        <table mat-table [dataSource]="plants" class="mat-elevation-z8 demo-table">
+            <ng-container matColumnDef="country">
+                <th mat-header-cell *matHeaderCellDef>País</th>
+                <td mat-cell *matCellDef="let element">{{element.country}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre de la planta</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="read_ok">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="flex flex-row items-center gap-1">
+                        <div class="h-[14px] w-[14px]">
+                            <img src="icon-ok-small.svg" alt="icon-ok-svg">
                         </div>
-                        <div class="flex justify-center items-center pr-4">
-                            <div class="h-[60px] w-[60px]">
-                                <img src="danger_icon.svg" alt="danger-icon-svg">
-                            </div>
-                        </div>
+                        <p class="text-[14px] font-medium ">Lecturas OK</p>
                     </div>
-                </aside>
-                <aside class="h-[90px] w-[256px] bg-white rounded-xl">
-                    <div class="w-full h-full flex flex-row justify-between items-center">
-                        <div class="flex flex-col justify-start items-start pl-4">
-                            <p class="text-[12px] font-normal card-p-color">Sensores deshabilitados</p>
-                            <p class="text-[20px] font-bold card-number-color">{{sensorsDisabled || 0}}</p>
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.sensorOk ? element.sensorOk.value || 0 : 0}}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="medium_alerts">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="flex flex-row items-center gap-1">
+                        <div class="h-[14px] w-[14px]">
+                            <img src="icon-warning-small.svg" alt="icon-warning-svg">
                         </div>
-                        <div class="flex justify-center items-center pr-4">
-                            <div class="h-[60px] w-[60px]">
-                                <img src="disabled_icon.svg" alt="disabled-icon-svg">
-                            </div>
+                        <p class="text-[14px] font-medium ">Alertas medias</p>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.mediumAlert ? element.mediumAlert.value || 0 :
+                    0}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="red_alerts">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div class="flex flex-row items-center gap-1">
+                        <div class="h-[14px] w-[14px]">
+                            <img src="icon-danger-small.svg" alt="icon-warning-svg">
                         </div>
+                        <p class="text-[14px] font-medium ">Alertas Rojas</p>
                     </div>
-                </aside>
-            </article>
-            <article
-                class="relative w-full flex flex-col justify-between rounded-xl bg-white p-3 h-[56vh] overflow-y-auto">
-                <div class="header-table mx-4 flex flex-row justify-start items-center gap-6 py-4">
-                    <div>
-                        <h2 class="text-[16px] font-semibold">
-                            Plantas
-                        </h2>
-                    </div>
-                    <div>
-                        <button (click)="openDialogCreateUpdatePlant()"
-                            class="rounded-sm py-1 px-4 b-add-plant text-[12px] font-medium cursor-pointer ">
-                            + Crear nueva planta
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.redAlert ? element.redAlert.value || 0 : 0}}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="flex flex-row items-center justify-end gap-6">
+                        <div>
+                            <button (click)="plantSelected = undefined"
+                                *ngIf="plantSelected && plantSelected.id === element.id" type="button"
+                                class="button-table button-stop-to-see-table tracking-wide text-[12px] text-white bg-primary font-medium ">
+                                Dejar de ver
+                            </button>
+                            <button (click)="plantSelected = element"
+                                *ngIf="!plantSelected || plantSelected && plantSelected.id !== element.id"
+                                type="button"
+                                class="button-table button-see-plant tracking-wide text-[12px] text-white bg-primary font-medium ">
+                                Ver planta
+                            </button>
+                        </div>
+                        <button class="mr-1" mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item (click)="openDialogCreateUpdatePlant(element)">
+                                <mat-icon>edit</mat-icon>
+                                <span class="text-xs ">Editar planta</span>
+                            </button>
+                            <button mat-menu-item (click)="openDialogDeletePlant(element)">
+                                <mat-icon>delete_outline</mat-icon>
+                                <span class="text-xs ">Eliminar planta</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </article>
+    <article class="w-full flex flex-col gap-3 mt-3 pb-6">
+        <div class="w-full flex flex-col">
+            <div>
+                <h3 class="text-[16px] font-medium">
+                    Monitoreo por plantas
+                </h3>
+            </div>
+            <div *ngIf="plantSelected">
+                <p class="text-[12px] font-semibold p-bluesky-color">{{plantSelected.country.concat(", ").concat(plantSelected.name+".")}}</p>
+            </div>
+        </div>
+        <div *ngIf="!plantSelected"
+            class="bg-container-unselected-plant w-full flex flex-col justify-center items-center ">
+            <p class="text-[14px] font-semibold ">Selecciona una planta de la tabla,</p>
+            <p class="text-[14px] font-normal ">para mostrar resultados.</p>
+        </div>
+        <div *ngIf="plantSelected" class="w-full flex flex-row justify-between flex-wrap gap-y-4">
+            <aside *ngFor="let sensor of plantSelected.sensors"
+                class="relative cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
+                <div
+                    class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
+                    <div *ngIf="sensor.isEnabled" class="flex flex-col justify-around items-center">
+                        <button (click)="openDialogUpdateSensor(sensor)" class="button-sensor-card">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <p class="text-xs font-medium p-primary-color">Editar</p>
+                    </div>
+                    <div class="flex flex-col justify-around items-center">
+                        <button (click)="openDialogDisableEnableSensor(sensor)" class="button-sensor-card">
+                            <mat-icon *ngIf="sensor.isEnabled">visibility_off</mat-icon>
+                            <mat-icon *ngIf="!sensor.isEnabled">visibility</mat-icon>
+                        </button>
+                        <p class="text-xs font-medium p-primary-color">{{sensor.isEnabled ?
+                            'Deshabilitar':'Habilitar'}}</p>
                     </div>
                 </div>
-                <div *ngIf="plants.length == 0" class="absolute top-[56%] left-[36%]">
-                    <p class="text-[14px] p-bluesky-color ">Cree una planta para comenzar.</p>
-                </div>
-                <table mat-table [dataSource]="plants" class="mat-elevation-z8 demo-table">
-                    <ng-container matColumnDef="country">
-                        <th mat-header-cell *matHeaderCellDef>País</th>
-                        <td mat-cell *matCellDef="let element">{{element.country}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Nombre de la planta</th>
-                        <td mat-cell *matCellDef="let element">{{element.name}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="read_ok">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <div class="flex flex-row items-center gap-1">
+                <div class="w-full h-full flex flex-row justify-between items-center">
+                    <div class="flex flex-col justify-start items-start pl-4">
+                        <p class="text-[12px] font-normal card-p-color">{{getSensorName(sensor.type)}}</p>
+                        <div class="flex flex-row gap-3">
+                            <div class="flex flex-row gap-1 items-center">
                                 <div class="h-[14px] w-[14px]">
-                                    <img src="icon-ok-small.svg" alt="icon-ok-svg">
+                                    <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
                                 </div>
-                                <p class="text-[14px] font-medium ">Lecturas OK</p>
-                            </div>
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{element.sensorOk ? element.sensorOk.value || 0 : 0}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="medium_alerts">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <div class="flex flex-row items-center gap-1">
-                                <div class="h-[14px] w-[14px]">
-                                    <img src="icon-warning-small.svg" alt="icon-warning-svg">
-                                </div>
-                                <p class="text-[14px] font-medium ">Alertas medias</p>
-                            </div>
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{element.mediumAlert ? element.mediumAlert.value || 0 :
-                            0}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="red_alerts">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <div class="flex flex-row items-center gap-1">
-                                <div class="h-[14px] w-[14px]">
-                                    <img src="icon-danger-small.svg" alt="icon-warning-svg">
-                                </div>
-                                <p class="text-[14px] font-medium ">Alertas Rojas</p>
-                            </div>
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{element.redAlert ? element.redAlert.value || 0 : 0}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let element">
-                            <div class="flex flex-row items-center justify-end gap-6">
                                 <div>
-                                    <button (click)="plantSelected = undefined"
-                                        *ngIf="plantSelected && plantSelected.id === element.id" type="button"
-                                        class="button-table button-stop-to-see-table tracking-wide text-[12px] text-white bg-primary font-medium ">
-                                        Dejar de ver
-                                    </button>
-                                    <button (click)="plantSelected = element"
-                                        *ngIf="!plantSelected || plantSelected && plantSelected.id !== element.id"
-                                        type="button"
-                                        class="button-table button-see-plant tracking-wide text-[12px] text-white bg-primary font-medium ">
-                                        Ver planta
-                                    </button>
+                                    <p class="text-[12px] font-normal">{{sensor.sensorOk.value}}</p>
                                 </div>
-                                <button class="mr-1" mat-icon-button [matMenuTriggerFor]="menu">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu" xPosition="before">
-                                    <button mat-menu-item (click)="openDialogCreateUpdatePlant(element)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span class="text-xs ">Editar planta</span>
-                                    </button>
-                                    <button mat-menu-item (click)="openDialogDeletePlant(element)">
-                                        <mat-icon>delete_outline</mat-icon>
-                                        <span class="text-xs ">Eliminar planta</span>
-                                    </button>
-                                </mat-menu>
                             </div>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </article>
-            <article class="w-full flex flex-col gap-3 mt-3 pb-6">
-                <div class="w-full flex flex-col">
-                    <div>
-                        <h3 class="text-[16px] font-medium">
-                            Monitoreo por plantas
-                        </h3>
-                    </div>
-                    <div *ngIf="plantSelected">
-                        <p class="text-[12px] font-semibold p-bluesky-color">{{plantSelected.country.concat(",
-                            ").concat(plantSelected.name+".")}}</p>
-                    </div>
-                </div>
-                <div *ngIf="!plantSelected"
-                    class="bg-container-unselected-plant w-full flex flex-col justify-center items-center ">
-                    <p class="text-[14px] font-semibold ">Selecciona una planta de la tabla,</p>
-                    <p class="text-[14px] font-normal ">para mostrar resultados.</p>
-                </div>
-                <div *ngIf="plantSelected" class="w-full flex flex-row justify-between flex-wrap gap-y-4">
-                    <aside *ngFor="let sensor of plantSelected.sensors"
-                        class="relative cursor-pointer h-[90px] w-[256px] bg-white rounded-xl card-sensor">
-                        <div
-                            class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
-                            <div *ngIf="sensor.isEnabled" class="flex flex-col justify-around items-center">
-                                <button (click)="openDialogUpdateSensor(sensor)" class="button-sensor-card">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <p class="text-xs font-medium p-primary-color">Editar</p>
-                            </div>
-                            <div class="flex flex-col justify-around items-center">
-                                <button (click)="openDialogDisableEnableSensor(sensor)" class="button-sensor-card">
-                                    <mat-icon *ngIf="sensor.isEnabled">visibility_off</mat-icon>
-                                    <mat-icon *ngIf="!sensor.isEnabled">visibility</mat-icon>
-                                </button>
-                                <p class="text-xs font-medium p-primary-color">{{sensor.isEnabled ?
-                                    'Deshabilitar':'Habilitar'}}</p>
-                            </div>
-                        </div>
-                        <div class="w-full h-full flex flex-row justify-between items-center">
-                            <div class="flex flex-col justify-start items-start pl-4">
-                                <p class="text-[12px] font-normal card-p-color">{{getSensorName(sensor.type)}}</p>
-                                <div class="flex flex-row gap-3">
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-ok-small.svg" alt="icon-ok-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">{{sensor.sensorOk.value}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">{{sensor.mediumAlert.value}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1 items-center">
-                                        <div class="h-[14px] w-[14px]">
-                                            <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
-                                        </div>
-                                        <div>
-                                            <p class="text-[12px] font-normal">{{sensor.redAlert.value}}</p>
-                                        </div>
-                                    </div>
+                            <div class="flex flex-row gap-1 items-center">
+                                <div class="h-[14px] w-[14px]">
+                                    <img src="icon-warning-small.svg" alt="icon-ok-warning-svg">
                                 </div>
-                                <p class="text-[12px] font-medium skew-text p-red" *ngIf="!sensor.isEnabled">
-                                    Deshabilitado</p>
+                                <div>
+                                    <p class="text-[12px] font-normal">{{sensor.mediumAlert.value}}</p>
+                                </div>
                             </div>
-                            <div class="flex justify-center items-center pr-4">
-                                <div class="h-[60px] w-[60px]">
-                                    <img [src]="getUrlIcon(sensor.type)" alt="icon-temperature-svg">
+                            <div class="flex flex-row gap-1 items-center">
+                                <div class="h-[14px] w-[14px]">
+                                    <img src="icon-danger-small.svg" alt="icon-danger-small-svg">
+                                </div>
+                                <div>
+                                    <p class="text-[12px] font-normal">{{sensor.redAlert.value}}</p>
                                 </div>
                             </div>
                         </div>
-                    </aside>
+                        <p class="text-[12px] font-medium skew-text p-red" *ngIf="!sensor.isEnabled">
+                            Deshabilitado</p>
+                    </div>
+                    <div class="flex justify-center items-center pr-4">
+                        <div class="h-[60px] w-[60px]">
+                            <img [src]="getUrlIcon(sensor.type)" alt="icon-temperature-svg">
+                        </div>
+                    </div>
                 </div>
-            </article>
-        </main>
-    </div>
-</div>
+            </aside>
+        </div>
+    </article>
+</main>

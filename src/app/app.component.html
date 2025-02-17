@@ -1,2 +1,122 @@
+<div *ngIf="isSessionActive()" class="h-full w-full flex bg-dashboard">
+    <div class="h-full w-[80px] sidebar shadow-2xl shadow-r">
+        <div class="w-full flex items-center justify-center py-6">
+            <div class="h-[32px] w-[36px]">
+                <img src="Logo.svg" alt="logo-icon">
+            </div>
+        </div>
+        <div class="mt-12">
+            <ul class="p-0 flex flex-col w-full">
+                <li class="w-full flex items-center justify-center pb-8">
+                    <a (click)="titlePage = 'Monitoreo global'" [routerLink]="['dashboard']" class="cursor-pointer">
+                        <div class="h-[20px] w-[20px]">
+                            <img [ngClass]="{'svg-sidebar-unselected': titlePage != 'Monitoreo global'}" class="svg-sidebar" src="Dashboard.svg" alt="dashboard-icon">
+                        </div>
+                    </a>
+                </li>
+                <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
+                    <a (click)="titlePage = 'Monitoreo por planta'" [routerLink]="['plants/monitoring']" class="cursor-pointer">
+                        <div class="h-[20px] w-[20px]">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Monitoreo por planta'}" class="svg-sidebar" src="Monitoreo por planta.svg" alt="dashboard-icon">
+                        </div>
+                    </a>
+                </li>
+                <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
+                    <a (click)="titlePage = 'Histórico de sensores'" [routerLink]="['sensors/history']" class="cursor-pointer">
+                        <div class="h-[20px] w-[20px]">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de sensores'}" class="svg-sidebar" src="Histórico de sensores.svg" alt="dashboard-icon">
+                        </div>
+                    </a>
+                </li>
+                <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
+                    <a (click)="titlePage = 'Histórico de plantas'" [routerLink]="['plants/history']" class="cursor-pointer">
+                        <div class="h-[20px] w-[20px]">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de plantas'}" class="svg-sidebar" src="Históricodeplantas.svg" alt="dashboard-icon">
+                        </div>
+                    </a>
+                </li>
+                <li class="w-full flex items-center justify-center pb-8">
+                    <a (click)="logout()" class="cursor-pointer">
+                        <div class="h-[20px] w-[20px]">
+                            <img class="svg-sidebar" src="Cerrarsesión.svg" alt="dashboard-icon">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-<router-outlet />
+    </div>
+    <div class="pl-6 pt-8 pr-16 w-full h-full overflow-y-auto ">
+        <header class=" flex flex-row justify-between items-center w-full pb-3">
+            <div>
+                <div>
+                    <h1 class="text-[30px] font-medium py-1">{{titlePage}}</h1>
+                </div>
+            </div>
+            <div>
+                <nav>
+                    <ul class="p-0 flex flex-row justify-between gap-4">
+                        <li class="cursor-pointer pt-1">
+                            <div [matMenuTriggerFor]="menuLenguage" class="h-[20px] w-[20px]">
+                                <img src="Idioma.svg" alt="lenguage-icon-svg">
+                            </div>
+                            <mat-menu #menuLenguage="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="goProfile()">
+                                    <mat-icon>translate</mat-icon>
+                                    <span class="text-xs ">Español</span>
+                                </button>
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>translate</mat-icon>
+                                    <span class="text-xs ">Ingles</span>
+                                </button>
+                            </mat-menu>
+                        </li>
+                        <li class="cursor-pointer pt-1">
+                            <div [matMenuTriggerFor]="menuSettings" class="h-[20px] w-[20px]">
+                                <img src="Ajustes.svg" alt="lenguage-icon-svg">
+                            </div>
+                            <mat-menu #menuSettings="matMenu" xPosition="before">
+                                <button mat-menu-item class="cursor-text">
+                                    <mat-icon>tag_faces</mat-icon>
+                                    <span class="text-xs ">Estamos trabajando en esta funcionalidad!</span>
+                                </button>
+                            </mat-menu>
+                        </li>
+                        <li class="cursor-pointer">
+                            <div [matMenuTriggerFor]="menuNotifications" class="h-[20px] w-[20px]">
+                                <img src="notification.svg" alt="lenguage-icon-svg">
+                            </div>
+                            <mat-menu #menuNotifications="matMenu" xPosition="before">
+                                <button mat-menu-item class="cursor-text">
+                                    <mat-icon>tag_faces</mat-icon>
+                                    <span class="text-xs ">Estamos trabajando en esta funcionalidad!</span>
+                                </button>
+                            </mat-menu>
+                        </li>
+                        <li class="cursor-pointer">
+                            <div [matMenuTriggerFor]="menuProfile">
+                                <p class="text-[18px] font-semibold">
+                                    {{userUsername}}
+                                </p>
+                            </div>
+                            <mat-menu #menuProfile="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="goProfile(); titlePage = 'Perfil de usuario'">
+                                    <mat-icon>account_circle</mat-icon>
+                                    <span class="text-xs ">Ver perfil</span>
+                                </button>
+                                <button mat-menu-item (click)="logout()">
+                                    <mat-icon>logout</mat-icon>
+                                    <span class="text-xs ">Cerrar sesión</span>
+                                </button>
+                            </mat-menu>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="w-full">
+            <router-outlet />
+        </div>
+    </div>
+</div>
+<router-outlet *ngIf="!isSessionActive()"></router-outlet>

@@ -1,1 +1,20 @@
-<p>profile works!</p>
+<main class="w-full flex justify-center h-full items-center">
+    <div class="flex gap-10 flex-col w-full h-[70vh] rounded-xl bg-white p-6">
+        <div>
+            <label for="username" class="block mb-2 text-sm font-medium label-form-color">
+                Nombre de usuario
+            </label>
+            <input [value]="username" disabled type="text" id="username"
+                class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                required />
+        </div>
+        <div>
+            <label for="email" class="block mb-2 text-sm font-medium label-form-color">
+                Correo electronico
+            </label>
+            <input [value]="emailinfo" disabled type="text" id="email"
+                class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                required />
+        </div>
+    </div>
+</main>

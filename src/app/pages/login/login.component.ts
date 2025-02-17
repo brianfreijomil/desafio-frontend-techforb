@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthRegister } from '../../interfaces/auth';
 import { UtilsService } from '../../services/utils.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,8 @@ export class LoginComponent {
     private route: ActivatedRoute,
     private authSrv: AuthService,
     private router: Router,
-    private utilSrv: UtilsService
+    private utilSrv: UtilsService,
+    private cookieSrv: CookieService
   ) {
     this.route.url.subscribe(url => {
       this.isRegister = url[0].path === 'sign_up';
@@ -58,7 +60,7 @@ export class LoginComponent {
 
     this.authSrv.signin(this.email, this.password).subscribe({
       next: (response) => {
-        this.utilSrv.saveEmail(response.email);
+        this.authSrv.saveEmail(response.jwt);
         this.utilSrv.saveUsername(response.username);
         this.authSrv.saveToken(response.jwt);
         this.router.navigate(['dashboard']);
@@ -107,6 +109,9 @@ export class LoginComponent {
       }
       this.authSrv.signup(req).subscribe({
         next: (response) => {
+          this.cookieSrv.set("jwt",response.jwt,);
+          this.cookieSrv.set("username",response.username);
+          this.cookieSrv.set("email",response.email);
           this.utilSrv.saveEmail(response.email);
           this.utilSrv.saveUsername(response.username);
           this.authSrv.saveToken(response.jwt);

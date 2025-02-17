@@ -20,8 +20,8 @@ export class UtilsService {
     localStorage.setItem("email", email);
   }
 
-  getUserEmail(): string | null {
-    return localStorage.getItem("email");
+  getUserEmail(): string {
+    return localStorage.getItem("email") || "Sin informacion";
   }
 
   validateEmail(email: string) {

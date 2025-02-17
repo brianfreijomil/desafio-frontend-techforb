@@ -20,14 +20,13 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['country', 'name', 'read_ok', 'medium_alerts', 'red_alerts', 'actions'];
-  userUsername: string = '';
 
   sensorsDisabled: number = 0;
   summaryReadings: Reading[] = [];
@@ -36,21 +35,32 @@ export class DashboardComponent implements OnInit {
   summaryReadingRedAlert: Reading | undefined = undefined; 
 
   plants: Plant[] = [];
+  filteredPlants: Plant[] = [];
+  filter: string = '';
   plantSelected: Plant | undefined = undefined;
 
   readonly dialog = inject(MatDialog);
 
   constructor(
-    private router: Router,
-    private authSrv: AuthService,
     private plantSrv: PlantService,
-    private utilSrv: UtilsService
+    private utilSrv: UtilsService,
+    private authSrv:AuthService
   ) { }
 
   ngOnInit(): void {
-    this.userUsername = this.utilSrv.getUserUsername() || 'Tu';
     this.getPlantsByUser();
     this.getSummaryReadings();
+  }
+
+  showAuthorizedOption() {
+    const allowedAuthorities = ['ROLE_ADMIN','ROLE_DEVELOPER','ROLE_USER'];
+    const userAuthorities: string[] = this.authSrv.getAuthorities(); 
+
+    const hasAccess = userAuthorities.some(authority => allowedAuthorities.includes(authority));
+    if (!hasAccess) {
+      return false;
+    }
+    return true;
   }
 
   getSummaryReadings(): void {
@@ -78,10 +88,28 @@ export class DashboardComponent implements OnInit {
     this.plantSrv.getPlantsByUser().subscribe({
       next: (response) => {
         this.plants = response;
+        this.filteredPlants = this.plants;
       },
       error: (err) => {
         console.error(err);
       },
+    });
+  }
+
+  filterPlants() {
+    const search = this.filter.toLowerCase();
+    this.filteredPlants = this.plants.filter((plant) => {
+      const nameMatch = plant.name?.toLowerCase().includes(search);
+      const countryMatch = plant.country?.toLowerCase().includes(search);
+
+      return nameMatch || countryMatch;
+    });
+  }
+
+  sortPlants(){
+    this.filteredPlants.sort((a, b) => {
+      const countryCompare = a.country.localeCompare(b.country);
+      return countryCompare !== 0 ? countryCompare : a.name.localeCompare(b.name);
     });
   }
 
@@ -108,6 +136,7 @@ export class DashboardComponent implements OnInit {
         //this.getSummaryReadings();
         this.plants = this.plants.filter((p) => p.id !== result.id);
         this.plants = [...this.plants, result]
+        this.filteredPlants = this.plants;
         let msg = plantToEdit ? "Planta editada con éxito" : "Planta creada con éxito";
         this.openDialogToast("SUCCESS", msg);
       }
@@ -124,6 +153,7 @@ export class DashboardComponent implements OnInit {
         this.plantSrv.getPlantsByUser().subscribe({
           next: (response) => {
             this.plants = response;
+            this.filteredPlants = this.plants;
             this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
           },
           error: (err) => {
@@ -167,6 +197,7 @@ export class DashboardComponent implements OnInit {
           this.plantSrv.getPlantsByUser().subscribe({
             next: (response) => {
               this.plants = response;
+              this.filterPlants();
               this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
             },
             error: (err) => {
@@ -188,15 +219,6 @@ export class DashboardComponent implements OnInit {
 
   getSensorName(type: string) {
     return this.utilSrv.getTypeName(type);
-  }
-
-  goProfile() {
-    this.router.navigate(['/profile']);
-  }
-
-  logout() {
-    this.authSrv.logout()
-    this.router.navigate(['/sign_in']);
   }
 
   getUrlIcon(type: string) {

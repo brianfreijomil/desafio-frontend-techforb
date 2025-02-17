@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AuthLogin, AuthRegister } from '../interfaces/auth';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,10 @@ export class AuthService {
   private _sessionActive: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public sessionActive: Observable<boolean> = this._sessionActive.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   signin(email: string, password: string): Observable<any> {
-    const req: AuthLogin = {email, password}
+    const req: AuthLogin = { email, password }
     return this.http.post(`${this.apiUrl}/log-in`, req);
   }
 
@@ -27,7 +28,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/sign-up`, req);
   }
 
-  updateSession(status:boolean) {
+  updateSession(status: boolean) {
     this._sessionActive.next(status);
   }
 
@@ -67,4 +68,15 @@ export class AuthService {
     const token = this.getToken();
     return token ? jwtDecode(token) : null;
   }
+
+  getAuthorities(): string[] {
+    const decodedToken = this.decodeToken();
+    return (decodedToken?.authorities as string).split(',') || [];
+  }
+
+  saveEmail(jwt:string) {
+    const tokenDecoded = jwtDecode(jwt)
+    localStorage.setItem("email", (tokenDecoded as any).email);
+  }
+
 }
