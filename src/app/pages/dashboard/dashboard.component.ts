@@ -17,12 +17,13 @@ import { Sensor, SensorIconEnum, SensorTypeEnum, SensorUpdate } from '../../inte
 import { DialogUpdateSensorComponent } from '../../components/dialog-update-sensor/dialog-update-sensor.component';
 import { DialogDisableEnableItemComponent } from '../../components/dialog-disable-enable-item/dialog-disable-enable-item.component';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule, FormsModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
 
@@ -30,13 +31,14 @@ export class DashboardComponent implements OnInit {
 
   sensorsDisabled: number = 0;
   summaryReadings: Reading[] = [];
-  summaryReadingOk: Reading | undefined = undefined; 
-  summaryReadingMediumAlert: Reading | undefined = undefined; 
-  summaryReadingRedAlert: Reading | undefined = undefined; 
+  summaryReadingOk: Reading | undefined = undefined;
+  summaryReadingMediumAlert: Reading | undefined = undefined;
+  summaryReadingRedAlert: Reading | undefined = undefined;
 
   plants: Plant[] = [];
   filteredPlants: Plant[] = [];
   filter: string = '';
+  plantsSort: 'asc' | 'desc' = 'desc';
   plantSelected: Plant | undefined = undefined;
 
   readonly dialog = inject(MatDialog);
@@ -44,7 +46,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private plantSrv: PlantService,
     private utilSrv: UtilsService,
-    private authSrv:AuthService
+    private authSrv: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -52,9 +54,10 @@ export class DashboardComponent implements OnInit {
     this.getSummaryReadings();
   }
 
+
   showAuthorizedOption() {
-    const allowedAuthorities = ['ROLE_ADMIN','ROLE_DEVELOPER','ROLE_USER'];
-    const userAuthorities: string[] = this.authSrv.getAuthorities(); 
+    const allowedAuthorities = ['ROLE_ADMIN', 'ROLE_DEVELOPER', 'ROLE_USER'];
+    const userAuthorities: string[] = this.authSrv.getAuthorities();
 
     const hasAccess = userAuthorities.some(authority => allowedAuthorities.includes(authority));
     if (!hasAccess) {
@@ -106,11 +109,21 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  sortPlants(){
-    this.filteredPlants.sort((a, b) => {
-      const countryCompare = a.country.localeCompare(b.country);
-      return countryCompare !== 0 ? countryCompare : a.name.localeCompare(b.name);
-    });
+  sortPlants(sort: 'asc' | 'desc') {
+    if (sort === 'asc') {
+      this.plantsSort = 'asc';
+      this.filteredPlants = [...this.filteredPlants].sort((a, b) => {
+        const countryCompare = a.country.localeCompare(b.country);
+        return countryCompare !== 0 ? countryCompare : a.name.localeCompare(b.name);
+      });
+    } else {
+      this.plantsSort = 'desc';
+      this.filteredPlants = [...this.filteredPlants].sort((a, b) => {
+        const countryCompare = a.country.localeCompare(b.country);
+        return countryCompare !== 0 ? -countryCompare : a.name.localeCompare(b.name);
+      });
+    }
+
   }
 
   getPlantById(plant: Plant): void {
@@ -137,6 +150,7 @@ export class DashboardComponent implements OnInit {
         this.plants = this.plants.filter((p) => p.id !== result.id);
         this.plants = [...this.plants, result]
         this.filteredPlants = this.plants;
+        this.filterPlants();
         let msg = plantToEdit ? "Planta editada con éxito" : "Planta creada con éxito";
         this.openDialogToast("SUCCESS", msg);
       }
@@ -154,6 +168,7 @@ export class DashboardComponent implements OnInit {
           next: (response) => {
             this.plants = response;
             this.filteredPlants = this.plants;
+            this.filterPlants();
             this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
           },
           error: (err) => {
@@ -178,7 +193,9 @@ export class DashboardComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.plants = this.plants.filter((p) => p.id !== plantToDelete.id)
+          this.plants = this.plants.filter((p) => p.id !== plantToDelete.id);
+          this.filteredPlants = this.plants;
+          this.filterPlants();
           this.openDialogToast("SUCCESS", "Planta eliminada con éxito");
         }
       });
@@ -197,6 +214,7 @@ export class DashboardComponent implements OnInit {
           this.plantSrv.getPlantsByUser().subscribe({
             next: (response) => {
               this.plants = response;
+              this.filteredPlants = this.plants;
               this.filterPlants();
               this.plantSelected = this.plants.find((p) => p.id === this.plantSelected?.id);
             },
@@ -205,7 +223,7 @@ export class DashboardComponent implements OnInit {
             },
           });
           this.getSummaryReadings();
-          this.openDialogToast("SUCCESS", `Planta ${result.isEnabled ? 'habilitada':'deshabilitada'} con éxito`);
+          this.openDialogToast("SUCCESS", `Planta ${result.isEnabled ? 'habilitada' : 'deshabilitada'} con éxito`);
         }
       });
     }

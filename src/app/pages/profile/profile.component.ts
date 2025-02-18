@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.username = this.utilSrv.getUserUsername() || "Sin informacion";
     this.emailinfo = this.utilSrv.getUserEmail();
+    
   }
 
 }

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { SensorTypeEnum } from '../interfaces/sensor';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   saveUsername(username: string): void {
     localStorage.setItem("user", username);

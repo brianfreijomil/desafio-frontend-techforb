@@ -109,3 +109,17 @@
     color: rgba(255, 16, 16, 0.753) !important;
     fill: white !important;
 }
+
+.btn-ord-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-ord-table .mat-icon {
+    color: gray !important;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+.btn-ord-table .mat-icon:hover {
+    color: black !important;
+}

@@ -69,11 +69,21 @@
                     + Crear nueva planta
                 </button>
             </div>
+            <div>
+                <input (input)="filterPlants()" type="text"
+                    class="bg-gray-50 border border-gray-300 font-medium text-gray-900 text-xs rounded-lg block w-full p-1.5"
+                    placeholder="Buscar por nombre, pais" [(ngModel)]="filter" />
+            </div>
+            <div>
+                <div (click)="sortPlants(plantsSort === 'desc' ? 'asc' : 'desc')" class="btn-ord-table rotate-90">
+                    <mat-icon>compare_arrows</mat-icon>
+                </div>
+            </div>
         </div>
         <div *ngIf="plants.length == 0" class="absolute top-[56%] left-[36%]">
             <p *ngIf="showAuthorizedOption()" class="text-[14px] p-bluesky-color ">Cree una planta para comenzar.</p>
         </div>
-        <table mat-table [dataSource]="plants" class="mat-elevation-z8 demo-table">
+        <table mat-table [dataSource]="filteredPlants" class="mat-elevation-z8 demo-table">
             <ng-container matColumnDef="country">
                 <th mat-header-cell *matHeaderCellDef>País</th>
                 <td mat-cell *matCellDef="let element">{{element.country}}</td>
