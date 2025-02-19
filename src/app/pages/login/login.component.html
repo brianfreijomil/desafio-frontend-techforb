@@ -76,7 +76,7 @@
                                 <img *ngIf="passwordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                             </div>
                             <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
-                                {{msgErrorPass}}
+                                {{ msgErrorPass || msgError }}
                             </p>
                         </mat-form-field>
                     </p>
@@ -97,7 +97,7 @@
                     <!-- LOGIN -->
                     <div *ngIf="!isRegister" class="flex flex-row justify-between items-center">
                         <div class="w-[60%]">
-                            <p class="font-normal text-[14px] p-secondary-color">
+                            <p (click)="lostPassword()" class="cursor-pointer font-normal text-[14px] p-secondary-color forgot-password-text">
                                 ¿Olvidaste tu contraseña?
                             </p>
                         </div>

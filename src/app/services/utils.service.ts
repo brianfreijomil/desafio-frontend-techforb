@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { SensorTypeEnum } from '../interfaces/sensor';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import countriesData from '../utils/countries.json'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+
+  private countryMap: { [code: string]: string } = countriesData;
 
   constructor(private http: HttpClient) { }
 
@@ -61,5 +63,16 @@ export class UtilsService {
     return 'Unknown';
   }
 
+  getCountryCode(countryName: string): string | null {
+    const code = Object.keys(this.countryMap).find(
+      key => this.countryMap[key].toLowerCase() === countryName.toLowerCase()
+    );
+    return code || null;
+  }
+
+  getCountryNames(): string[] {
+    return Object.values(this.countryMap); // Devuelve un array con solo los nombres
+  }
+  
 
 }

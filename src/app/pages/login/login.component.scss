@@ -66,3 +66,11 @@ mat-label {
     border: 1px solid #DCDBDD;
     color: #202020;
 }
+
+.forgot-password-text {
+    text-decoration-line: none;
+}
+.forgot-password-text:hover {
+    text-decoration-line: underline;
+    color: #33A3AA;
+}

@@ -18,7 +18,7 @@ import { DialogUpdateSensorComponent } from '../../components/dialog-update-sens
 import { DialogDisableEnableItemComponent } from '../../components/dialog-disable-enable-item/dialog-disable-enable-item.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-
+import countriesData from '../../utils/countries.json';
 @Component({
   selector: 'app-dashboard',
   imports: [MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule, FormsModule],
@@ -41,6 +41,10 @@ export class DashboardComponent implements OnInit {
   plantsSort: 'asc' | 'desc' = 'desc';
   plantSelected: Plant | undefined = undefined;
 
+  srcFlagCountry:string = ''
+  srcsetFlagCountry:string = '';
+  countryName:string = '';
+
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -52,6 +56,17 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getPlantsByUser();
     this.getSummaryReadings();
+  }
+
+  getSrcFlagCountry(country:string) {
+
+    const countryCodeISO = this.utilSrv.getCountryCode(country);
+    return `https://flagcdn.com/16x12/${countryCodeISO}.png`
+  }
+
+  getSrcSetFlagCountry(country:string) {
+    const countryCodeISO = this.utilSrv.getCountryCode(country);
+    return `https://flagcdn.com/32x24/${countryCodeISO}.png 2x,https://flagcdn.com/48x36/${countryCodeISO}.png 3x`
   }
 
 

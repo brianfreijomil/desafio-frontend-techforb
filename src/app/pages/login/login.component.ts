@@ -41,6 +41,8 @@ export class LoginComponent {
   msgError: string = ''
   msgErrorRePass:string = ''
 
+  formLostPassword:boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private authSrv: AuthService,
@@ -62,6 +64,7 @@ export class LoginComponent {
       next: (response) => {
         this.authSrv.saveEmail(response.jwt);
         this.utilSrv.saveUsername(response.username);
+        this.authSrv.updateUser(response.username);
         this.authSrv.saveToken(response.jwt);
         this.router.navigate(['dashboard']);
       },
@@ -88,6 +91,13 @@ export class LoginComponent {
     this.msgErrorPass = '';
     this.msgErrorRePass = '';
     this.msgErrorUsername = '';
+  }
+
+  clearInputs() {
+    this.email = '';
+    this.password = '';
+    this.repassword = '';
+    this.username = '';
   }
 
   signup(): void {
@@ -150,5 +160,10 @@ export class LoginComponent {
     this.repasswordHide = !this.repasswordHide
   }
 
+  lostPassword() {
+    this.clearInputs();
+    this.clearMsgs();
+    this.formLostPassword = true;
+  }
 
 }

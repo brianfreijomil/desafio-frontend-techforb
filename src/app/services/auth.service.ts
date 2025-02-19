@@ -16,6 +16,9 @@ export class AuthService {
   private _sessionActive: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public sessionActive: Observable<boolean> = this._sessionActive.asObservable();
 
+  private _userActive: BehaviorSubject<string> = new BehaviorSubject('');
+  public userActive: Observable<string> = this._userActive.asObservable();
+
   constructor(private http: HttpClient) { }
 
   signin(email: string, password: string): Observable<any> {
@@ -29,6 +32,10 @@ export class AuthService {
 
   updateSession(status: boolean) {
     this._sessionActive.next(status);
+  }
+
+  updateUser(username: string) {
+    this._userActive.next(username);
   }
 
   saveToken(token: string): void {

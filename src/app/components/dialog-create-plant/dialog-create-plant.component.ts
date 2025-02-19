@@ -14,6 +14,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { Plant, PlantOut } from '../../interfaces/plant';
 import { PlantService } from '../../services/plant.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   standalone: true,
@@ -46,17 +47,11 @@ export class DialogCreatePlantComponent implements OnInit {
 
 
 
-  countries: any[] = [
-    {value: 'Argentina', viewValue: 'Argentina'},
-    {value: 'Brasil', viewValue: 'Brasil'},
-    {value: 'Uruguay', viewValue: 'Uruguay'},
-    {value: 'Alemania', viewValue: 'Alemania'},
-    {value: 'Rusia', viewValue: 'Rusia'},
-    {value: 'Ghana', viewValue: 'Ghana'},
-    {value: 'Arabia Saudita', viewValue: 'Arabia Saudita'},
-  ];
+  countries: string[] = [];
 
-  constructor(private plantSrv:PlantService,
+  constructor(
+    private utilSrv: UtilsService,
+    private plantSrv:PlantService,
     private currentDialog: MatDialogRef<DialogCreatePlantComponent>,
     @Inject(MAT_DIALOG_DATA) public plant:Plant,
     private fb:FormBuilder,
@@ -80,6 +75,8 @@ export class DialogCreatePlantComponent implements OnInit {
         country: this.plant.country
       })
     }
+
+    this.countries = this.utilSrv.getCountryNames();
   }
 
   savePlant() {

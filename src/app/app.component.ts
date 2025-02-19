@@ -14,61 +14,65 @@ import { UtilsService } from './services/utils.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  
+
   userUsername: string = '';
   titlePage: string = '';
-  
-    constructor(
-      @Inject(DOCUMENT) private document: Document,
-      private router: Router,
-      private authSrv: AuthService,
-      private utilSrv: UtilsService
-    ) {
-      
-    }
-  
-    ngOnInit(): void { 
-      this.titlePage = this.getTitlePage(this.document.location.pathname)
-      this.userUsername = this.utilSrv.getUserUsername() || 'Tu';
-    }
 
-    getTitlePage(section:string) {
-      switch (section) {
-        case '/dashboard':
-          return 'Monitoreo global';
-        case '/plants/monitoring':
-          return 'Monitoreo por planta';
-        case '/plants/history':
-          return 'Histórico de sensores';
-        case '/profile':
-          return 'Perfil de usuario'
-        default:
-          return 'Monitoreo global'
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router,
+    private authSrv: AuthService,
+    private utilSrv: UtilsService
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.titlePage = this.getTitlePage(this.document.location.pathname)
+    this.authSrv.userActive.subscribe(
+      data => {
+        this.userUsername = data;
       }
-    }
+    )
+  }
 
-    goProfile() {
-      this.titlePage = 'Perfil de usuario'
-      this.router.navigate(['/profile']);
+  getTitlePage(section: string) {
+    switch (section) {
+      case '/dashboard':
+        return 'Monitoreo global';
+      case '/plants/monitoring':
+        return 'Monitoreo por planta';
+      case '/plants/history':
+        return 'Histórico de sensores';
+      case '/profile':
+        return 'Perfil de usuario'
+      default:
+        return 'Monitoreo global'
     }
+  }
 
-    isSessionActive() {
-      return this.authSrv.isAuthenticated();
-    }
-  
-    logout() {
-      this.authSrv.logout()
-      this.router.navigate(['/sign_in']);
-    }
+  goProfile() {
+    this.titlePage = 'Perfil de usuario'
+    this.router.navigate(['/profile']);
+  }
 
-    showAuthorizedOption() {
-      const allowedAuthorities = ['ROLE_ADMIN','ROLE_DEVELOPER','ROLE_USER'];
-      const userAuthorities: string[] = this.authSrv.getAuthorities(); 
+  isSessionActive() {
+    return this.authSrv.isAuthenticated();
+  }
 
-      const hasAccess = userAuthorities.some(authority => allowedAuthorities.includes(authority));
-      if (!hasAccess) {
-        return false;
-      }
-      return true;
+  logout() {
+    this.authSrv.logout()
+    this.router.navigate(['/sign_in']);
+  }
+
+  showAuthorizedOption() {
+    const allowedAuthorities = ['ROLE_ADMIN', 'ROLE_DEVELOPER', 'ROLE_USER'];
+    const userAuthorities: string[] = this.authSrv.getAuthorities();
+
+    const hasAccess = userAuthorities.some(authority => allowedAuthorities.includes(authority));
+    if (!hasAccess) {
+      return false;
     }
+    return true;
+  }
 }
