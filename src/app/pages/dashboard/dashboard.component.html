@@ -1,69 +1,72 @@
-<main class="w-full flex flex-col gap-4">
-    <article class="w-full flex flex-row justify-between">
-        <aside class=" w-[23%] min-h-8 bg-white rounded-xl p-4">
+<main class="w-full flex flex-col gap-4 px-6">
+    <div>
+        <h2 class="text-[16px] font-medium">Monitoreo global</h2>
+    </div>
+    <article class="w-full flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between">
+        <aside class=" w-full md:w-[23%] min-h-8 bg-white rounded-lg md:rounded-lg p-4">
             <div class="w-full h-full flex flex-row justify-between items-center">
                 <div class="flex flex-col justify-start items-start ">
                     <p class="text-summary-card font-normal card-p-color">Lecturas OK</p>
-                    <p class="text-[1.5vw] font-bold card-number-color">{{summaryReadingOk?.value || 0}}</p>
+                    <p class="text-[20px] md:text-[1.5vw] font-bold card-number-color">{{summaryReadingOk?.value || 0}}</p>
                 </div>
                 <div class="flex justify-center items-center ">
-                    <div class="w-[4.5vw]">
-                        <img class="w-full h-full" src="ok_icon.svg" alt="ok-icon-svg">
+                    <div class="w-[49px]  md:w-[4.5vw] h-auto">
+                        <img class="w-full" src="ok_icon.svg" alt="ok-icon-svg">
                     </div>
                 </div>
             </div>
         </aside>
-        <aside class=" w-[23%] h-auto bg-white rounded-xl p-4">
+        <aside class=" w-full md:w-[23%] h-auto bg-white rounded-lg md:rounded-lg p-4">
             <div class="w-full h-full flex flex-row justify-between items-center">
                 <div class="flex flex-col justify-start items-start">
                     <p class="text-summary-card font-normal card-p-color">Alertas medias</p>
-                    <p class="text-[1.5vw] font-bold card-number-color">{{summaryReadingMediumAlert?.value || 0}}
+                    <p class="text-[20px] md:text-[1.5vw] font-bold card-number-color">{{summaryReadingMediumAlert?.value || 0}}
                     </p>
                 </div>
                 <div class="flex justify-center items-center">
-                    <div class="w-[4.5vw]">
-                        <img class="w-full h-full" src="warning_icon.svg" alt="warning-icon-svg">
+                    <div class="w-[49px]  md:w-[4.5vw] h-auto">
+                        <img class="w-full" src="warning_icon.svg" alt="warning-icon-svg">
                     </div>
                 </div>
             </div>
         </aside>
-        <aside class=" w-[23%] h-auto bg-white rounded-xl p-4">
+        <aside class=" w-full md:w-[23%] h-auto bg-white rounded-lg md:rounded-lg p-4">
             <div class="w-full h-full flex flex-row justify-between items-center">
                 <div class="flex flex-col justify-start items-start">
                     <p class="text-summary-card font-normal card-p-color">Alertas rojas</p>
-                    <p class="text-[1.5vw] font-bold card-number-color">{{summaryReadingRedAlert?.value || 0}}
+                    <p class="text-[20px] md:text-[1.5vw] font-bold card-number-color">{{summaryReadingRedAlert?.value || 0}}
                     </p>
                 </div>
                 <div class="flex justify-center items-center">
-                    <div class="w-[4.5vw]">
-                        <img class="w-full h-full" src="danger_icon.svg" alt="danger-icon-svg">
+                    <div class="w-[49px]  md:w-[4.5vw] h-auto">
+                        <img class="w-full" src="danger_icon.svg" alt="danger-icon-svg">
                     </div>
                 </div>
             </div>
         </aside>
-        <aside class=" w-[23%] h-auto bg-white rounded-xl p-4">
+        <aside class=" w-full md:w-[23%] h-auto bg-white rounded-lg md:rounded-lg p-4">
             <div class="w-full h-full flex flex-row justify-between items-center">
                 <div class="flex flex-col justify-start items-start">
                     <p class="text-summary-card font-normal card-p-color">Sensores deshabilitados</p>
-                    <p class="text-[1.5vw] font-bold card-number-color">{{sensorsDisabled || 0}}</p>
+                    <p class="text-[20px] md:text-[1.5vw] font-bold card-number-color">{{sensorsDisabled || 0}}</p>
                 </div>
                 <div class="flex justify-center items-center">
-                    <div class="w-[4.5vw]">
-                        <img class="w-full h-full" src="disabled_icon.svg" alt="disabled-icon-svg">
+                    <div class="w-[49px]  md:w-[4.5vw] h-auto">
+                        <img class="w-full" src="disabled_icon.svg" alt="disabled-icon-svg">
                     </div>
                 </div>
             </div>
         </aside>
     </article>
     <article
-        class="relative w-full flex flex-col justify-start rounded-xl bg-white px-3 pb-3 h-[56vh] table-section">
-        <div class="w-full header-table px-4 flex flex-row justify-start items-center gap-6 py-4">
+        class="relative w-full flex flex-col justify-start rounded-xl bg-white px-4 pb-3 h-[56vh] table-section">
+        <div class="w-full header-table flex flex-row justify-between md:justify-start items-end md:items-center gap-6 pt-4">
             <div>
-                <h2 class="text-[16px] font-semibold">
+                <h2 class="text-[18px] font-bold md:text-[16px] md:font-semibold">
                     Plantas
                 </h2>
             </div>
-            <div *ngIf="showAuthorizedOption()">
+            <div class="hidden md:block" *ngIf="showAuthorizedOption()">
                 <button (click)="openDialogCreateUpdatePlant()"
                     class="rounded-sm py-1 px-4 b-add-plant text-[12px] font-medium cursor-pointer ">
                     + Crear nueva planta
@@ -83,7 +86,34 @@
         <div *ngIf="plants.length == 0" class="absolute top-[56%] left-[36%]">
             <p *ngIf="showAuthorizedOption()" class="text-[14px] p-bluesky-color ">Cree una planta para comenzar.</p>
         </div>
-        <table mat-table [dataSource]="filteredPlants" class="mat-elevation-z8 demo-table">
+        <!-- table mobile-->
+        <table class="px-1 w-full bg-white">
+            <tbody>
+            <tr *ngFor="let plant of filteredPlants" class="border-b border-b-gray-300">
+                <td class="py-2">
+                <div class="flex items-center gap-2 text-[14px] font-medium">
+                    <div class="mr-1 w-[24px] h-[14px]">
+                        <img class="w-full h-full"
+                            [src]="getSrcFlagCountry(plant.country)"
+                            [srcset]="getSrcSetFlagCountry(plant.country)"
+                            [alt]="plant.country"
+                        >
+                    </div>
+                    {{plant.country}}
+                </div>
+                <p class="text-[12px] font-normal text-gray-500">{{plant.name}}</p>
+                </td>
+                <td class="px-2 py-2 text-red-500">{{plant.sensorOk ? plant.sensorOk.value || 0 : 0}}</td>
+                <td class="px-2 py-2 text-red-500">{{plant.mediumAlert ? plant.mediumAlert.value || 0 : 0}}</td>
+                <td class="px-2 py-2 text-red-500">{{plant.redAlert ? plant.redAlert.value || 0 : 0}}</td>
+                <td class="px-2 py-2 text-right">
+                <button class="text-gray-500 hover:text-gray-700">⋮</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>          
+        <!-- table desktop/tablet-->
+        <table mat-table [dataSource]="filteredPlants" class="hidden md:table mat-elevation-z8 demo-table">
             <ng-container matColumnDef="country">
                 <th mat-header-cell *matHeaderCellDef>
                     <p class="text-header-cell">País</p>
@@ -101,7 +131,7 @@
                     </div>
                 </td>
             </ng-container>
-    
+            
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef><p class="text-header-cell">Nombre <span class="text-header-cell text-header-cell-hide">de la planta</span></p></th>
                 <td mat-cell *matCellDef="let element">{{element.name}}</td>

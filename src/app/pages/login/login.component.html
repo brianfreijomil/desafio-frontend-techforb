@@ -41,7 +41,7 @@
         </div>
         <div
             [ngClass]="{'padding-register': isRegister}"
-            class="bg-secondary flex flex-col md:justify-center items-center px-0 pt-24 md:py-0 md:pl-14 md:pr-6 lg:pl-28 lg:pr-16 h-full w-[100%] md:w-[50%] md:rounded-l-[40px] md:absolute md:top-0 md:left-[50%] md:overflow-y-auto">
+            class="bg-secondary flex flex-col md:justify-center items-center md:items-stretch px-0 pt-24 md:py-0 md:pl-14 md:pr-6 lg:pl-28 lg:pr-16 h-full w-[100%] md:w-[50%] md:rounded-l-[40px] md:absolute md:top-0 md:left-[50%] md:overflow-y-auto">
             <div class="hidden md:flex md:mb-2">
                 <h1 class="md:text-[24px] lg:text-[30px] font-semibold p-primary-color">Portal de monitoreo</h1>
             </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="w-full md:w-auto md:mb-4">
                 <!-- FORM LOGIN/REGISTER FOR MOBILE -->
-                <form class="flex w-full md:hidden">
+                <form class="flex w-full md:hidden" (ngSubmit)="isRegister ? signup() : signin()">
                     <div class="flex flex-col gap-6 w-full md:hidden">
                         @if (isRegister) {
                             <div class="flex flex-col px-2 w-full relative md:hidden">
@@ -83,7 +83,7 @@
                             <label for="password" class="block mb-2 text-[14px] font-normal text-gray-400">
                                 Contraseña
                             </label>
-                            <input (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" [ngModelOptions]="{standalone: true}" type="password" id="password"
+                            <input (keyup.enter)="isRegister ? signup() : signin()" (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" [ngModelOptions]="{standalone: true}" type="password" id="password"
                                 class="bg-gray-50 border border-gray-300 font-normal text-gray-900 text-[14px] rounded-xl block w-full p-2.5"
                                 placeholder="Ingresa tu contraseña" required />
                                 <div (click)="tooglePassword()" class=" w-[20px] absolute top-[58%] left-[90%] bg-white">
@@ -96,10 +96,10 @@
                         </div>
                         @if (isRegister) {
                             <div class="relative px-2">
-                                <label for="password" class="block mb-2 text-[14px] font-normal text-gray-400">
+                                <label for="repassword" class="block mb-2 text-[14px] font-normal text-gray-400">
                                     Repetir contraseña
                                 </label>
-                                <input (input)="msgErrorRePass = ''" [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" [ngModelOptions]="{standalone: true}" type="password" id="password"
+                                <input (keyup.enter)="isRegister ? signup() : signin()" (input)="msgErrorRePass = ''" [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" [ngModelOptions]="{standalone: true}" type="repassword" id="repassword"
                                     class="bg-gray-50 border border-gray-300 font-normal text-gray-900 text-[14px] rounded-xl block w-full p-2.5"
                                     placeholder="Repite tu contraseña" required />
                                     <div (click)="toogleRePassword()" class=" w-[20px] absolute top-[58%] left-[90%] bg-white">
@@ -107,7 +107,7 @@
                                         <img *ngIf="repasswordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                                     </div>
                                     <p *ngIf="loginFailed" class="absolute top-[98%] left-4 p-red text-[12px]">
-                                        {{ msgErrorRePass || msgError }}
+                                        {{ msgErrorRePass || msgError || '' }}
                                     </p>
                             </div>
                         }
@@ -130,7 +130,7 @@
                     </div>
                 </form>
                 <!-- FORM LOGIN/REGISTER FOR TABLETS AND DESKTOP -->
-                <form class="hidden md:flex flex-col w-[86%]">
+                <form class="hidden md:flex flex-col w-[86%]" (ngSubmit)="isRegister ? signup() : signin()">
                     <p *ngIf="isRegister" class="w-full mb-6 relative">
                         <mat-form-field appearance="outline">
                             <mat-label>Usuario</mat-label>
@@ -152,7 +152,7 @@
                     <p class="w-full relative mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Contraseña</mat-label>
-                            <input (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
+                            <input (keyup.enter)="isRegister ? signup() : signin()" (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
                             <div (click)="tooglePassword()" class="md:w-[16px] lg:w-[20px] absolute md:top-[20%] lg:top-[20%] left-[94%] bg-white">
                                 <img *ngIf="!passwordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="passwordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
@@ -166,7 +166,7 @@
                     <p *ngIf="isRegister" class="w-full relative mb-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Repetir contraseña</mat-label>
-                            <input [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" matInput placeholder="Repetir contraseña" [ngModelOptions]="{standalone: true}">
+                            <input (keyup.enter)="isRegister ? signup() : signin()" [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" matInput placeholder="Repetir contraseña" [ngModelOptions]="{standalone: true}">
                             <div (click)="toogleRePassword()" class="md:w-[16px] lg:w-[20px] absolute md:top-[20%] lg:top-[20%] left-[94%] bg-white">
                                 <img *ngIf="!repasswordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="repasswordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">

@@ -6,9 +6,9 @@ export interface Plant {
     name: string;
     country: string;
     sensors?: Sensor[];
-    sensorOk?: Reading[];
-    mediumAlert?: Reading[];
-    redAlert?: Reading[];
+    sensorOk?: Reading;
+    mediumAlert?: Reading;
+    redAlert?: Reading;
 }
 
 export interface PlantOut {

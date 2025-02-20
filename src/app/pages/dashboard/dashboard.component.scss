@@ -181,3 +181,20 @@
         font-size: 8px;
     }
 }
+
+@media (max-width: 767px) {
+
+    .text-summary-card {
+        font-size: 12px;
+    }
+
+    .header-table {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        border-bottom: none;
+        background-color: white;
+        padding-bottom: 14px;
+    }
+}

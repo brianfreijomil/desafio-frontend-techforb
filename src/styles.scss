@@ -15,6 +15,7 @@
 
 .bg-dashboard {
     background-color: #E9F1F4;
+    background-color: #f9f9fa;
 }
 
 .bg-white {
@@ -162,6 +163,16 @@ input.input-form-dialog-error:focus-visible {
 
 .svg-sidebar-unselected {
     filter: invert(90%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
+}
+
+.btn-menu-mobile .mat-icon {
+    color: rgba(31, 31, 31, 1);
+}
+
+@media (max-width: 767px) {
+    .bg-dashboard {
+        background-color: #f9f9fa;
+    }
 }
 
 

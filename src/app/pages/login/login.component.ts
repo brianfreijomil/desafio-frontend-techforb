@@ -110,6 +110,7 @@ export class LoginComponent {
     this.username = this.username.trim();
 
     if (this.password !== this.repassword) {
+      this.loginFailed = true;
       this.msgErrorRePass = "Las contraseñas deben coincidir"
     } else {
       const req: AuthRegister = {
