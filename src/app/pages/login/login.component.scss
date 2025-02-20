@@ -99,3 +99,14 @@ mat-label {
         padding-bottom: 10px;
     }
 }
+
+@media (max-width: 767px) {
+    .icon-eye-input {
+        filter: invert(96%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
+    }
+
+    .padding-register {
+        padding-top: calc(var(--spacing) * 24);
+        padding-bottom: 0px;
+    }
+}
