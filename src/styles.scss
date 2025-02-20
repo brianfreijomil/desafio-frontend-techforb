@@ -126,7 +126,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .button-dialog {
-    padding: 8px 0 8px 0;
+    width: 112px;
+    padding: 8px 0px 8px 0px;
 }
 
 input.input-form-dialog-error {
@@ -153,4 +154,12 @@ input.input-form-dialog-error:focus-visible {
 
 .svg-sidebar-unselected {
     filter: invert(90%) sepia(4%) saturate(10%) hue-rotate(180deg) brightness(86%) contrast(88%);
+}
+
+
+@media (max-width: 850px) {
+    .button-dialog {
+        width: 92px;
+        font-size: 12px;
+    }
 }

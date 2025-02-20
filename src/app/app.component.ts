@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
     private authSrv: AuthService,
-    private utilSrv: UtilsService
+    private utilSrv:UtilsService
   ) {
 
   }
@@ -34,6 +34,9 @@ export class AppComponent implements OnInit {
         this.userUsername = data;
       }
     )
+    if (!this.userUsername) {
+      this.userUsername = this.utilSrv.getUserUsername() || '';
+    }
   }
 
   getTitlePage(section: string) {

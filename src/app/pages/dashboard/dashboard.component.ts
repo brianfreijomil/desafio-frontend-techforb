@@ -18,7 +18,6 @@ import { DialogUpdateSensorComponent } from '../../components/dialog-update-sens
 import { DialogDisableEnableItemComponent } from '../../components/dialog-disable-enable-item/dialog-disable-enable-item.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-import countriesData from '../../utils/countries.json';
 @Component({
   selector: 'app-dashboard',
   imports: [MatTableModule, CommonModule, MatButtonModule, MatMenuModule, MatIconModule, FormsModule],

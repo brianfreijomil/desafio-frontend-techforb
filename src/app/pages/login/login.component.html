@@ -3,20 +3,20 @@
         <div class="flex h-full w-[56%] absolute top-0 left-0">
             <img class="w-[100%]" src="Imagen Loguin.png" alt="login-image">
         </div>
-        <div class="absolute degradado opacity-[85%] top-0 left-0 w-full h-full"></div>
-        <div class="absolute top-0 left-0 h-full flex flex-col w-[50%] pl-26 pr-30 justify-center">
-            <div class="mb-5">
-                <h1 class="text-[48px] font-semibold c-secondary">
+        <div class="absolute degradado md:opacity-[90%] lg:opacity-[85%] top-0 left-0 w-full h-full"></div>
+        <div class="absolute top-0 left-0 h-full flex flex-col w-[50%] justify-center pl-18 lg:pr-22">
+            <div class="md:mb-3 lg:mb-5">
+                <h1 class="md:text-[28px] lg:text-[42px] font-semibold c-secondary">
                     {{ !isRegister ? 'Iniciar sesión' : 'Registrarse'}}
                 </h1>
             </div>
             <div class="c-secondary mb-8">
-                <p class="text-default">
+                <p class="md:text-[12px] lg:text-[14px] pr-8">
                     {{ !isRegister ? 'Nos alegra tenerte de vuelta y estamos listos para atender tus necesidades. Inicia sesión y continúa aprovechando al máximo nuestra plataforma.' : '¡Bienvenido! Estamos encantados de que quieras unirte a nuestra plataforma. Regístrate y comienza a disfrutar de todas las ventajas que ofrecemos. No pierdas la oportunidad de ser parte de nuestra comunidad.' }}
                 </p>
             </div>
             <div>
-                <ul class="flex flex-col p-0 gap-5">
+                <ul class="flex flex-col p-0 gap-5 mr-10">
                     <li class="flex flex-row">
                         <div class="w-[24px] mr-3">
                             <img src="icon-monitoring.png" alt="icon-login">
@@ -40,29 +40,30 @@
             </div>
         </div>
         <div
-            class="bg-secondary flex flex-col justify-center px-24 h-full w-[50%] rounded-l-[40px] absolute top-0 left-[50%]">
-            <div class="mb-4">
-                <h1 class="text-3xl font-semibold p-primary-color">Portal de monitoreo</h1>
+            [ngClass]="{'padding-register': isRegister}"
+            class="bg-secondary flex flex-col justify-center md:pl-14 md:pr-6 lg:pl-28 lg:pr-16 h-full w-[50%] rounded-l-[40px] absolute top-0 left-[50%] overflow-y-auto">
+            <div class="mb-2">
+                <h1 class="md:text-[24px] lg:text-[30px] font-semibold p-primary-color">Portal de monitoreo</h1>
             </div>
             <div class="mb-6">
-                <h2 class="text-xl font-[500] p-primary-color">{{!isRegister ? 'Iniciar sesión' : 'Registrarse'}}</h2>
+                <h2 class="md:text-[18px] lg:text-lg font-[500] p-primary-color">{{!isRegister ? 'Iniciar sesión' : 'Registrarse'}}</h2>
             </div>
             <div class="mb-4">
                 <form class="flex flex-col w-[86%]">
-                    <p *ngIf="isRegister" class="w-full mb-6">
+                    <p *ngIf="isRegister" class="w-full mb-6 relative">
                         <mat-form-field appearance="outline">
                             <mat-label>Usuario</mat-label>
                             <input (input)="msgErrorUsername = ''" [(ngModel)]="username" type="text" inputmode="username" matInput placeholder="Usuario" [ngModelOptions]="{standalone: true}">
-                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                            <p *ngIf="loginFailed" class="absolute md:top-[50%] lg:top-[56%] left-0 p-red text-[1.6vh] mt-1">
                                 {{msgErrorUsername}}
                             </p>
                         </mat-form-field>
                     </p>
-                    <p class="w-full mb-6">
+                    <p class="w-full mb-6 relative">
                         <mat-form-field appearance="outline">
                             <mat-label>Email</mat-label>
                             <input (input)="msgErrorEmail = ''" [(ngModel)]="email" type="email" inputmode="email" matInput placeholder="Email" [ngModelOptions]="{standalone: true}">
-                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                            <p *ngIf="loginFailed" class="absolute md:top-[50%] lg:top-[56%] left-0 p-red text-[1.6vh] mt-1">
                                 {{msgErrorEmail}}
                             </p>
                         </mat-form-field>
@@ -71,11 +72,11 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Contraseña</mat-label>
                             <input (input)="msgErrorPass = ''" [(ngModel)]="password" [type]="passwordHide ? 'password' : 'text'" matInput placeholder="Contraseña" [ngModelOptions]="{standalone: true}">
-                            <div (click)="tooglePassword()" class="w-[20px] absolute top-3.5 left-[94%] bg-white">
+                            <div (click)="tooglePassword()" class="md:w-[16px] lg:w-[20px] absolute md:top-[20%] lg:top-[20%] left-[94%] bg-white">
                                 <img *ngIf="!passwordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="passwordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                             </div>
-                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                            <p *ngIf="loginFailed" class="absolute md:top-[50%] lg:top-[56%] left-0 p-red text-[1.6vh] mt-1">
                                 {{ msgErrorPass || msgError }}
                             </p>
                         </mat-form-field>
@@ -85,11 +86,11 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Repetir contraseña</mat-label>
                             <input [(ngModel)]="repassword" [type]="repasswordHide ? 'password' : 'text'" matInput placeholder="Repetir contraseña" [ngModelOptions]="{standalone: true}">
-                            <div (click)="toogleRePassword()" class="w-[20px] absolute top-3.5 left-[94%] bg-white">
+                            <div (click)="toogleRePassword()" class="md:w-[16px] lg:w-[20px] absolute md:top-[20%] lg:top-[20%] left-[94%] bg-white">
                                 <img *ngIf="!repasswordHide" class="icon-eye-input" src="-remove-red-eye_90161.svg" alt="icon-eye">
                                 <img *ngIf="repasswordHide" class="icon-eye-input" src="eye-hidden-design-black-interface-symbol_icon-icons.com_54536.svg" alt="icon-eye">
                             </div>
-                            <p *ngIf="loginFailed" class="absolute top-[70%] left-0 p-red text-[1.6vh] mt-1">
+                            <p *ngIf="loginFailed" class="absolute md:top-[50%] lg:top-[56%] left-0 p-red text-[1.6vh] mt-1">
                                 {{msgErrorRePass || msgError || ''}}
                             </p>
                         </mat-form-field>
@@ -97,12 +98,12 @@
                     <!-- LOGIN -->
                     <div *ngIf="!isRegister" class="flex flex-row justify-between items-center">
                         <div class="w-[60%]">
-                            <p (click)="lostPassword()" class="cursor-pointer font-normal text-[14px] p-secondary-color forgot-password-text">
+                            <p (click)="lostPassword()" class="cursor-pointer font-normal md:text-[10px] lg:text-[14px] p-secondary-color forgot-password-text">
                                 ¿Olvidaste tu contraseña?
                             </p>
                         </div>
                         <div>
-                            <button (click)="signin()" type="button" class="tracking-wide text-[14px] text-white bg-primary font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
+                            <button (click)="signin()" type="button" class="tracking-wide md:text-[10px] lg:text-[14px] text-white bg-primary whitespace-nowrap font-medium md:rounded-xl lg:rounded-2xl md:px-6 lg:px-7 md:py-2 lg:py-3 mb-2 focus:outline-none cursor-pointer">
                                 Iniciar sesión
                             </button>
                         </div>
@@ -110,12 +111,12 @@
                     <!-- REGISTER -->
                     <div *ngIf="isRegister" class="flex flex-row justify-between items-start">
                         <div class="w-[60%]">
-                            <p class="font-normal text-[12px] p-gray-color ">
+                            <p class="font-normal md:text-[8px] lg:text-[12px] p-gray-color ">
                                 -Al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial
                             </p>
                         </div>
                         <div>
-                            <button (click)="signup()" type="button" class="tracking-wide text-[14px] text-white bg-primary font-medium rounded-2xl text-sm px-7 py-3 mb-2 focus:outline-none cursor-pointer">
+                            <button (click)="signup()" type="button" class="tracking-wide md:text-[10px] lg:text-[14px] text-white bg-primary whitespace-nowrap font-medium md:rounded-xl lg:rounded-2xl md:px-6 lg:px-7 md:py-2 lg:py-3 mb-2 focus:outline-none cursor-pointer">
                                 Registrarse
                             </button>
                         </div>
@@ -123,13 +124,13 @@
                 </form>
             </div>
             <div class="flex flex-col w-[86%] mb-6">
-                <p class="p-gray-color font-normal text-[12px]">
+                <p class="p-gray-color font-normal md:text-[10px] lg:text-[12px]">
                     Protegido por reCAPTCHA y sujeto a la
                     <a class="p-bluesky-color" href="">Política de Privacidad</a> y <a href="">Condiciones.</a>
                 </p>
             </div>
             <div>
-                <p class="p-secondary-color font-normal text-[14px]">
+                <p class="p-secondary-color font-normal md:text-[12px] lg:text-[14px]">
                     {{!isRegister ? '¿No tienes una cuenta?':'¿Ya tienes una cuenta?'}}
                     <a 
                         [routerLink]="[isRegister ? '/sign_in' : '/sign_up']" 
