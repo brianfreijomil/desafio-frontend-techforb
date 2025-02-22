@@ -41,18 +41,18 @@
         </div>
         <div
             [ngClass]="{'padding-register': isRegister}"
-            class="bg-secondary flex flex-col md:justify-center items-center md:items-stretch px-0 pt-24 md:py-0 md:pl-14 md:pr-6 lg:pl-28 lg:pr-16 h-full w-[100%] md:w-[50%] md:rounded-l-[40px] md:absolute md:top-0 md:left-[50%] md:overflow-y-auto">
+            class="bg-secondary flex flex-col md:justify-center items-center md:items-stretch px-0 pt-10 md:py-0 md:pl-14 md:pr-6 lg:pl-28 lg:pr-16 h-full w-[100%] md:w-[50%] md:rounded-l-[40px] md:absolute md:top-0 md:left-[50%] md:overflow-y-auto">
             <div class="hidden md:flex md:mb-2">
                 <h1 class="md:text-[24px] lg:text-[30px] font-semibold p-primary-color">Portal de monitoreo</h1>
             </div>
-            <div class="w-[110px] h-[86px] md:hidden bg-logo-login-mobile mb-10"></div>
-            <div class="mb-10 md:mb-6">
+            <div class="w-[110px] h-[86px] md:hidden bg-logo-login-mobile mb-6"></div>
+            <div class="mb-6">
                 <h2 class="text-[32px] md:text-[18px] lg:text-lg font-medium p-primary-color-mobile">{{!isRegister ? 'Iniciar sesión' : 'Registrarse'}}</h2>
             </div>
             <div class="w-full md:w-auto md:mb-4">
                 <!-- FORM LOGIN/REGISTER FOR MOBILE -->
                 <form class="flex w-full md:hidden" (ngSubmit)="isRegister ? signup() : signin()">
-                    <div class="flex flex-col gap-6 w-full md:hidden">
+                    <div class="flex flex-col gap-4 w-full md:hidden">
                         @if (isRegister) {
                             <div class="flex flex-col px-2 w-full relative md:hidden">
                                 <label for="user" class="block mb-2 text-[14px] font-normal text-gray-400">
