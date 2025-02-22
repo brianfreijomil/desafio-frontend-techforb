@@ -59,7 +59,7 @@
         </aside>
     </article>
     <article
-        class="relative w-full flex flex-col justify-start rounded-xl bg-white px-4 pb-3 h-[56vh] table-section">
+        class="relative w-full flex flex-col justify-start rounded-xl bg-white px-4 pb-3 h-[30vh] md:h-[56vh] table-section">
         <div class="w-full header-table flex flex-row justify-between md:justify-start items-end md:items-center gap-6 pt-4">
             <div>
                 <h2 class="text-[18px] font-bold md:text-[16px] md:font-semibold">
@@ -90,7 +90,7 @@
         <table class="px-1 w-full bg-white">
             <tbody>
             <tr *ngFor="let plant of filteredPlants" class="border-b border-b-gray-300">
-                <td class="py-2">
+                <td class="pt-4 pb-2">
                 <div class="flex items-center gap-2 text-[14px] font-medium">
                     <div class="mr-1 w-[24px] h-[14px]">
                         <img class="w-full h-full"
@@ -103,11 +103,33 @@
                 </div>
                 <p class="text-[12px] font-normal text-gray-500">{{plant.name}}</p>
                 </td>
-                <td class="px-2 py-2 text-red-500">{{plant.sensorOk ? plant.sensorOk.value || 0 : 0}}</td>
-                <td class="px-2 py-2 text-red-500">{{plant.mediumAlert ? plant.mediumAlert.value || 0 : 0}}</td>
-                <td class="px-2 py-2 text-red-500">{{plant.redAlert ? plant.redAlert.value || 0 : 0}}</td>
-                <td class="px-2 py-2 text-right">
-                <button class="text-gray-500 hover:text-gray-700">⋮</button>
+                <td class="px-2 pt-4 pb-2 text-red-500">{{plant.sensorOk ? plant.sensorOk.value || 0 : 0}}</td>
+                <td class="px-2 pt-4 pb-2 text-red-500">{{plant.mediumAlert ? plant.mediumAlert.value || 0 : 0}}</td>
+                <td class="px-2 pt-4 pb-2 text-red-500">{{plant.redAlert ? plant.redAlert.value || 0 : 0}}</td>
+                <td class="px-2 pt-4 pb-2 text-right">
+                    <button class="mr-1" mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button (click)="plantSelected = undefined"
+                        *ngIf="plantSelected && plantSelected.id === plant.id" mat-menu-item>
+                            <mat-icon>close</mat-icon>
+                            <span class="text-xs ">Dejar de ver</span>
+                        </button>
+                        <button (click)="plantSelected = plant"
+                        *ngIf="!plantSelected || plantSelected && plantSelected.id !== plant.id" mat-menu-item>
+                            <mat-icon>remove_red_eye</mat-icon>
+                            <span class="text-xs ">Ver planta</span>
+                        </button>
+                        <button mat-menu-item (click)="openDialogCreateUpdatePlant(plant)">
+                            <mat-icon>edit</mat-icon>
+                            <span class="text-xs ">Editar planta</span>
+                        </button>
+                        <button mat-menu-item (click)="openDialogDeletePlant(plant)">
+                            <mat-icon>delete_outline</mat-icon>
+                            <span class="text-xs ">Eliminar planta</span>
+                        </button>
+                    </mat-menu>
                 </td>
             </tr>
             </tbody>
@@ -230,9 +252,9 @@
             <p class="text-[14px] font-semibold ">Selecciona una planta de la tabla,</p>
             <p class="text-[14px] font-normal ">para mostrar resultados.</p>
         </div>
-        <div *ngIf="plantSelected" class="w-full flex flex-row flex-wrap gap-y-4 gap-x-6 ">
+        <div *ngIf="plantSelected" class="w-full flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-y-4 md:gap-x-6 ">
             <aside *ngFor="let sensor of plantSelected.sensors"
-                class="relative cursor-pointer h-[84px] w-[256px] bg-white rounded-xl card-sensor">
+                class="relative cursor-pointer h-[84px] w-full md:w-[256px] bg-white rounded-xl card-sensor">
                 <div
                     class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
                     <div *ngIf="sensor.isEnabled" class="flex flex-col justify-around items-center">
