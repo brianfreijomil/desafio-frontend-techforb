@@ -56,7 +56,7 @@
                 </button>
                 <div *ngIf="showSideBar" class="fixed inset-0 bg-black opacity-50 z-90" (click)="showSideBar = !showSideBar"
                 ></div>
-                <aside [ngClass]="{ 'translate-x-0': showSideBar, '-translate-x-full': !showSideBar}" id="default-sidebar" class="fixed top-0 left-0 z-100 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+                <aside [ngClass]="{ 'translate-x-0': showSideBar, '-translate-x-full': !showSideBar}" id="default-sidebar" class="fixed top-0 left-0 z-100 w-64 h-screen transition-transform" aria-label="Sidebar">
                     <div (click)="showSideBar = !showSideBar" class="cursor-pointer cont-btn-close-menu-mobile absolute right-0 top-0 w-10 h-10 flex flex-row justify-center items-center">
                         <mat-icon>close</mat-icon>
                     </div>
@@ -132,11 +132,11 @@
                                 <img src="Idioma.svg" alt="lenguage-icon-svg">
                             </div>
                             <mat-menu #menuLenguage="matMenu" xPosition="before">
-                                <button mat-menu-item (click)="goProfile()">
+                                <button mat-menu-item>
                                     <mat-icon>translate</mat-icon>
                                     <span class="text-xs ">Español</span>
                                 </button>
-                                <button mat-menu-item (click)="logout()">
+                                <button mat-menu-item>
                                     <mat-icon>translate</mat-icon>
                                     <span class="text-xs ">Ingles</span>
                                 </button>
