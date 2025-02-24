@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit {
         this.filteredPlants = this.plants;
         this.filterPlants();
         let msg = plantToEdit ? "Planta editada con éxito" : "Planta creada con éxito";
-        this.openDialogToast("SUCCESS", msg);
+        this.openDialogToast("success", msg);
       }
     });
   }
@@ -190,7 +190,7 @@ export class DashboardComponent implements OnInit {
           },
         });
         this.getSummaryReadings();
-        this.openDialogToast("SUCCESS", "Sensor editado con éxito");
+        this.openDialogToast("success", "Sensor editado con éxito");
       }
     });
   }
@@ -210,7 +210,7 @@ export class DashboardComponent implements OnInit {
           this.plants = this.plants.filter((p) => p.id !== plantToDelete.id);
           this.filteredPlants = this.plants;
           this.filterPlants();
-          this.openDialogToast("SUCCESS", "Planta eliminada con éxito");
+          this.openDialogToast("success", "Planta eliminada con éxito");
         }
       });
     }
@@ -237,7 +237,7 @@ export class DashboardComponent implements OnInit {
             },
           });
           this.getSummaryReadings();
-          this.openDialogToast("SUCCESS", `Planta ${result.isEnabled ? 'habilitada' : 'deshabilitada'} con éxito`);
+          this.openDialogToast("success", `Planta ${result.isEnabled ? 'habilitada' : 'deshabilitada'} con éxito`);
         }
       });
     }

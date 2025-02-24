@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,8 @@ import { AuthService } from '../../services/auth.service';
 import { AuthRegister } from '../../interfaces/auth';
 import { UtilsService } from '../../services/utils.service';
 import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogToastComponent } from '../../components/dialog-toast/dialog-toast.component';
 
 @Component({
   selector: 'app-login',
@@ -42,6 +44,8 @@ export class LoginComponent {
   msgErrorRePass:string = ''
 
   formLostPassword:boolean = false;
+
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private route: ActivatedRoute,
@@ -100,6 +104,10 @@ export class LoginComponent {
     this.username = '';
   }
 
+  openDialogToast(type: string, msg: string): void {
+      this.dialog.open(DialogToastComponent, { data: { type: type, msg: msg } });
+    }
+
   signup(): void {
 
     this.clearMsgs();
@@ -120,13 +128,14 @@ export class LoginComponent {
       }
       this.authSrv.signup(req).subscribe({
         next: (response) => {
-          this.cookieSrv.set("jwt",response.jwt,);
-          this.cookieSrv.set("username",response.username);
-          this.cookieSrv.set("email",response.email);
-          this.utilSrv.saveEmail(response.email);
-          this.utilSrv.saveUsername(response.username);
-          this.authSrv.saveToken(response.jwt);
-          this.router.navigate(['dashboard']);
+          if (response.status) {
+            this.isRegister = false;
+            this.openDialogToast("success", response.message+', ya puede iniciar sesión.');
+          }
+          // } else {
+          //   this.isRegister = true;
+          //   this.openDialogToast("error", response.message);
+          // }
         },
         error: (err) => {
           this.loginFailed = true;
