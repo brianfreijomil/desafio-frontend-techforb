@@ -20,6 +20,8 @@ export class DialogDeleteItemComponent implements OnInit {
   titleDialog:string = '';
   descriptionDialog:string = '';
 
+  loader:boolean = false;
+
   constructor(private plantSrv: PlantService,
     private currentDialog: MatDialogRef<DialogDeleteItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,12 +33,16 @@ export class DialogDeleteItemComponent implements OnInit {
   }
 
   deletePlant(): void {
+    this.loader = true;
+
     if (this.data) {
       this.plantSrv.deletePlant(this.data.plantId).subscribe({
         next: (response) => {
+          this.loader = false;
           this.currentDialog.close(true);
         },
         error: (err) => {
+          this.loader = false;
           console.error('Delete Plant Error', err);
         },
       });

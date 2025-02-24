@@ -34,6 +34,7 @@ import { UtilsService } from '../../services/utils.service';
 export class DialogUpdateSensorComponent implements OnInit {
 
   formSensor: FormGroup;
+  loader: boolean = false;
 
   constructor(
     private utilSrv: UtilsService,
@@ -60,9 +61,12 @@ export class DialogUpdateSensorComponent implements OnInit {
 
   updateSensor() {
 
+    this.loader = true;
+
     if (this.formSensor.value.sensor_ok == this.sensor.sensorOk.value &&
       this.formSensor.value.medium_alerts == this.sensor.mediumAlert.value &&
       this.formSensor.value.red_alerts == this.sensor.redAlert.value) {
+      this.loader = false;
       this.currentDialog.close();
     } else {
       const r1: Reading = { id: this.sensor.sensorOk.id, value: this.formSensor.value.sensor_ok, type: this.sensor.sensorOk.type };
@@ -76,10 +80,12 @@ export class DialogUpdateSensorComponent implements OnInit {
       this.sensorSrv.updateSensor(this.sensor.id, sensorToSave).subscribe({
         next: (result) => {
           if (result) {
+            this.loader = false;
             this.currentDialog.close(result)
           }
         },
         error: (err) => {
+          this.loader = false;
           // console.log(err);
           this.currentDialog.close(undefined);
         }

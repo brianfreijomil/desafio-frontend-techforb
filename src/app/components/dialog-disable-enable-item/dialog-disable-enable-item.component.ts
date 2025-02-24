@@ -17,36 +17,41 @@ import { UtilsService } from '../../services/utils.service';
 })
 export class DialogDisableEnableItemComponent implements OnInit {
 
-  titleDialog:string = '';
-    descriptionDialog:string = '';
-    btnAction:string = '';
-  
-    constructor(private sensorSrv: SensorService, private utilSrv:UtilsService,
-      private currentDialog: MatDialogRef<DialogDisableEnableItemComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: Sensor,
-    ) { }
-  
-    ngOnInit(): void {
-      this.titleDialog = this.data.isEnabled ? "Deshabilitar sensor":"Habilitar sensor";
-      this.descriptionDialog = `Vas a ${this.data.isEnabled ? 'Deshabilitar':'Habilitar'} el sensor '${this.utilSrv.getTypeName(this.data.type)}'.`;
-      this.btnAction = this.data.isEnabled ? "Deshabilitar":"Habilitar"
+  titleDialog: string = '';
+  descriptionDialog: string = '';
+  btnAction: string = '';
+
+  loader: boolean = false;
+
+  constructor(private sensorSrv: SensorService, private utilSrv: UtilsService,
+    private currentDialog: MatDialogRef<DialogDisableEnableItemComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Sensor,
+  ) { }
+
+  ngOnInit(): void {
+    this.titleDialog = this.data.isEnabled ? "Deshabilitar sensor" : "Habilitar sensor";
+    this.descriptionDialog = `Vas a ${this.data.isEnabled ? 'Deshabilitar' : 'Habilitar'} el sensor '${this.utilSrv.getTypeName(this.data.type)}'.`;
+    this.btnAction = this.data.isEnabled ? "Deshabilitar" : "Habilitar"
+  }
+
+  disableEnableSensor(): void {
+    if (this.data) {
+      this.loader = true;
+      this.sensorSrv.disableEnableSensor(this.data.id).subscribe({
+        next: (response) => {
+          this.loader = false;
+          this.currentDialog.close(response);
+        },
+        error: (err) => {
+          this.loader = false;
+          console.error('Disable enable sensor Error', err);
+        },
+      });
     }
-  
-    disableEnableSensor(): void {
-      if (this.data) {
-        this.sensorSrv.disableEnableSensor(this.data.id).subscribe({
-          next: (response) => {
-            this.currentDialog.close(response);
-          },
-          error: (err) => {
-            console.error('Disable enable sensor Error', err);
-          },
-        });
-      }
-    }
-  
-    onCancel(): void {
-      this.currentDialog.close();
-    }
+  }
+
+  onCancel(): void {
+    this.currentDialog.close();
+  }
 
 }

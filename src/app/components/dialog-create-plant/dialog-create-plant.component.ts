@@ -45,7 +45,7 @@ export class DialogCreatePlantComponent implements OnInit {
   msgError:string = '';
   saveFailed:boolean = false;
 
-
+  loader:boolean = false;
 
   countries: string[] = [];
 
@@ -80,6 +80,9 @@ export class DialogCreatePlantComponent implements OnInit {
   }
 
   savePlant() {
+
+    this.loader = true;
+
     this.msgError = '';
     this.saveFailed = false;
 
@@ -94,10 +97,12 @@ export class DialogCreatePlantComponent implements OnInit {
       this.plantSrv.savePlant(plantSaved).subscribe({
         next: (result) => {
           if (result) {
+            this.loader = false;
             this.currentDialog.close(result)
           }
         },
         error: (err) => {
+          this.loader = false;
           this.saveFailed = true
           if (err.status >= 400) {
             this.msgError = err.error.message;
@@ -115,11 +120,13 @@ export class DialogCreatePlantComponent implements OnInit {
         this.plantSrv.updatePlant(this.plant.id,plantSaved).subscribe({
           next: (result) => {
             if (result) {
+              this.loader = false;
               this.currentDialog.close(result)
             }
           },
           error: (err) => {
             // console.log(err);
+            this.loader = false;
             this.currentDialog.close(undefined);
           }
         })

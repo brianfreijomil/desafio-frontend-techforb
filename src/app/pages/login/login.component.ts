@@ -45,6 +45,8 @@ export class LoginComponent {
 
   formLostPassword:boolean = false;
 
+  loader:boolean = false;
+
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -61,6 +63,8 @@ export class LoginComponent {
 
   signin(): void {
 
+    this.loader = true;
+
     this.email = this.email.trim();
     this.password = this.password.trim();
 
@@ -70,9 +74,11 @@ export class LoginComponent {
         this.utilSrv.saveUsername(response.username);
         this.authSrv.updateUser(response.username);
         this.authSrv.saveToken(response.jwt);
+        this.loader = false;
         this.router.navigate(['dashboard']);
       },
       error: (err) => {
+        this.loader = false;
         this.loginFailed = true;
         if (err.status === 400 || err.status === 404) { //bad req
           if (err.error.details) {
@@ -109,7 +115,7 @@ export class LoginComponent {
     }
 
   signup(): void {
-
+    this.loader = true;
     this.clearMsgs();
 
     this.password = this.password.trim();
@@ -119,6 +125,7 @@ export class LoginComponent {
 
     if (this.password !== this.repassword) {
       this.loginFailed = true;
+      this.loader = false;
       this.msgErrorRePass = "Las contraseñas deben coincidir"
     } else {
       const req: AuthRegister = {
@@ -129,6 +136,7 @@ export class LoginComponent {
       this.authSrv.signup(req).subscribe({
         next: (response) => {
           if (response.status) {
+            this.loader = false;
             this.isRegister = false;
             this.openDialogToast("success", response.message+', ya puede iniciar sesión.');
           }
@@ -138,6 +146,7 @@ export class LoginComponent {
           // }
         },
         error: (err) => {
+          this.loader = false;
           this.loginFailed = true;
           if (err.status === 400 || err.status === 404) { //bad req
             if (err.error.details) {

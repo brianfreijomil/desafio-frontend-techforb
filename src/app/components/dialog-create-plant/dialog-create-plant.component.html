@@ -33,7 +33,8 @@
     <button (click)="onCancel()" type="button" class="button-dialog w-26 button-table button-stop-to-see-table tracking-wide text-[14px] text-white bg-primary font-medium ">
         Cancelar
     </button>
-    <button [disabled]="formPlant.invalid" (click)="savePlant()" type="button" class="button-dialog w-26 button-table button-see-plant tracking-wide text-[14px] text-white bg-primary font-medium ">
-        {{btnAction}}
+    <button [disabled]="formPlant.invalid" (click)="savePlant()" type="button" class="flex justify-center items-center button-dialog w-26 button-table button-see-plant tracking-wide text-[14px] text-white bg-primary font-medium ">
+        <span *ngIf="!loader">{{btnAction}}</span>
+        <div *ngIf="loader" class="loader"></div>
     </button>
 </mat-dialog-actions>

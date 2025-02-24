@@ -114,15 +114,17 @@
                         <div class="absolute bottom-16 left-0 w-full md:hidden">
                             @if (!isRegister) {
                                 <div class="w-full px-6">
-                                    <button (click)="signin()" type="button" class=" w-full tracking-wide text-[16px] text-white bg-[#28b1b9] whitespace-nowrap font-medium rounded-2xl py-4 mb-2 focus:outline-none cursor-pointer">
-                                        Ingresar
+                                    <button (click)="signin()" type="button" class=" w-full flex justify-center items-center tracking-wide text-[16px] text-white bg-[#28b1b9] whitespace-nowrap font-medium rounded-2xl py-4 mb-2 focus:outline-none cursor-pointer">
+                                        <span *ngIf="!loader">Ingresar</span>
+                                        <div *ngIf="loader" class="loader"></div>
                                     </button>
                                 </div>
                             }
                             @else {
                                 <div class="w-full px-6">
-                                    <button (click)="signup()" type="button" class=" w-full tracking-wide text-[16px] text-white bg-[#28b1b9] whitespace-nowrap font-medium rounded-2xl py-4 mb-2 focus:outline-none cursor-pointer">
-                                        Registrarse
+                                    <button (click)="signup()" type="button" class=" w-full flex justify-center items-center tracking-wide text-[16px] text-white bg-[#28b1b9] whitespace-nowrap font-medium rounded-2xl py-4 mb-2 focus:outline-none cursor-pointer">
+                                        <span *ngIf="!loader">Registrarse</span>
+                                        <div *ngIf="loader" class="loader"></div>
                                     </button>
                                 </div>
                             }
@@ -185,7 +187,8 @@
                         </div>
                         <div>
                             <button (click)="signin()" type="button" class="tracking-wide md:text-[10px] lg:text-[14px] text-white bg-primary whitespace-nowrap font-medium md:rounded-xl lg:rounded-2xl md:px-6 lg:px-7 md:py-2 lg:py-3 mb-2 focus:outline-none cursor-pointer">
-                                Iniciar sesión
+                                <span *ngIf="!loader">Iniciar sesíon</span>
+                                <div *ngIf="loader" class="loader mx-6"></div>
                             </button>
                         </div>
                     </div>
@@ -198,7 +201,8 @@
                         </div>
                         <div>
                             <button (click)="signup()" type="button" class="tracking-wide md:text-[10px] lg:text-[14px] text-white bg-primary whitespace-nowrap font-medium md:rounded-xl lg:rounded-2xl md:px-6 lg:px-7 md:py-2 lg:py-3 mb-2 focus:outline-none cursor-pointer">
-                                Registrarse
+                                <span *ngIf="!loader">Registrarse</span>
+                                <div *ngIf="loader" class="loader mx-6"></div>
                             </button>
                         </div>
                     </div>
