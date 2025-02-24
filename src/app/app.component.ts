@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   userUsername: string = '';
   titlePage: string = '';
 
+  showSideBar:boolean = false;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private router: Router,

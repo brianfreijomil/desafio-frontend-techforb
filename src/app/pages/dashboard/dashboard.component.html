@@ -60,7 +60,7 @@
     </article>
     <article
         class="relative w-full flex flex-col justify-start rounded-xl bg-white px-4 pb-3 h-[30vh] md:h-[56vh] table-section">
-        <div class="w-full header-table flex flex-row justify-between md:justify-start items-end md:items-center gap-6 pt-4">
+        <div class="w-full header-table flex flex-row justify-between md:justify-start items-end md:items-center gap-6 pt-4 md:pb-4">
             <div>
                 <h2 class="text-[18px] font-bold md:text-[16px] md:font-semibold">
                     Plantas
@@ -87,7 +87,7 @@
             <p *ngIf="showAuthorizedOption()" class="text-[14px] p-bluesky-color ">Cree una planta para comenzar.</p>
         </div>
         <!-- table mobile-->
-        <table class="px-1 w-full bg-white">
+        <table class="px-1 w-full bg-white md:hidden">
             <tbody>
             <tr *ngFor="let plant of filteredPlants" class="border-b border-b-gray-300">
                 <td class="pt-4 pb-2">
@@ -113,12 +113,12 @@
                     <mat-menu #menu="matMenu" xPosition="before">
                         <button (click)="plantSelected = undefined"
                         *ngIf="plantSelected && plantSelected.id === plant.id" mat-menu-item>
-                            <mat-icon>close</mat-icon>
+                            <mat-icon>visibility_off</mat-icon>
                             <span class="text-xs ">Dejar de ver</span>
                         </button>
                         <button (click)="plantSelected = plant"
                         *ngIf="!plantSelected || plantSelected && plantSelected.id !== plant.id" mat-menu-item>
-                            <mat-icon>remove_red_eye</mat-icon>
+                            <mat-icon>visibility</mat-icon>
                             <span class="text-xs ">Ver planta</span>
                         </button>
                         <button mat-menu-item (click)="openDialogCreateUpdatePlant(plant)">
@@ -252,9 +252,9 @@
             <p class="text-[14px] font-semibold ">Selecciona una planta de la tabla,</p>
             <p class="text-[14px] font-normal ">para mostrar resultados.</p>
         </div>
-        <div *ngIf="plantSelected" class="w-full flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-y-4 md:gap-x-6 ">
+        <div *ngIf="plantSelected" class="w-full flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-0 md:gap-y-4 md:gap-x-6 ">
             <aside *ngFor="let sensor of plantSelected.sensors"
-                class="relative cursor-pointer h-[84px] w-full md:w-[256px] bg-white rounded-xl card-sensor">
+                class="relative cursor-pointer h-[84px] w-full md:w-[244px] bg-white rounded-xl card-sensor">
                 <div
                     class="w-full h-full sensor-card-hover rounded-xl flex flex-row justify-around items-center">
                     <div *ngIf="sensor.isEnabled" class="flex flex-col justify-around items-center">

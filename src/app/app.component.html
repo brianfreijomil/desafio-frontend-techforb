@@ -19,28 +19,28 @@
                 <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
                     <a (click)="titlePage = 'Monitoreo por planta'" [routerLink]="['plants/monitoring']" class="cursor-pointer">
                         <div class="h-[20px] w-[20px]">
-                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Monitoreo por planta'}" class="svg-sidebar" src="Monitoreo por planta.svg" alt="dashboard-icon">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Monitoreo por planta'}" class="svg-sidebar" src="Monitoreo por planta.svg" alt="monitoreo-por-planta-icon">
                         </div>
                     </a>
                 </li>
                 <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
                     <a (click)="titlePage = 'Histórico de sensores'" [routerLink]="['sensors/history']" class="cursor-pointer">
                         <div class="h-[20px] w-[20px]">
-                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de sensores'}" class="svg-sidebar" src="Histórico de sensores.svg" alt="dashboard-icon">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de sensores'}" class="svg-sidebar" src="Histórico de sensores.svg" alt="historico-sensores-icon">
                         </div>
                     </a>
                 </li>
                 <li *ngIf="showAuthorizedOption()" class="w-full flex items-center justify-center pb-8">
                     <a (click)="titlePage = 'Histórico de plantas'" [routerLink]="['plants/history']" class="cursor-pointer">
                         <div class="h-[20px] w-[20px]">
-                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de plantas'}" class="svg-sidebar" src="Históricodeplantas.svg" alt="dashboard-icon">
+                            <img [ngClass]="{'svg-sidebar-selected': titlePage == 'Histórico de plantas'}" class="svg-sidebar" src="Históricodeplantas.svg" alt="historico-plantas-icon">
                         </div>
                     </a>
                 </li>
                 <li class="w-full flex items-center justify-center pb-8">
                     <a (click)="logout()" class="cursor-pointer">
                         <div class="h-[20px] w-[20px]">
-                            <img class="svg-sidebar" src="Cerrarsesión.svg" alt="dashboard-icon">
+                            <img class="svg-sidebar" src="Cerrarsesión.svg" alt="cerrar-sesion-icon">
                         </div>
                     </a>
                 </li>
@@ -51,13 +51,68 @@
         <!-- HEADER Mobile -->
          <header class="flex flex-row justify-between items-end w-full pb-6 mb-4 border-b border-b-gray-300 md:hidden">
             <div class="ml-6 w-[32px] h-[32px] flex flex-col justify-end">
-                <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="w-full flex flex-row justify-start items-end btn-menu-mobile md:hidden ">
+                <button (click)="showSideBar = !showSideBar" aria-controls="default-sidebar" type="button" class="cursor-pointer w-full flex flex-row justify-center items-end btn-menu-mobile md:hidden ">
                     <mat-icon>menu</mat-icon>
                 </button>
+                <div *ngIf="showSideBar" class="fixed inset-0 bg-black opacity-50 z-90" (click)="showSideBar = !showSideBar"
+                ></div>
+                <aside [ngClass]="{ 'translate-x-0': showSideBar, '-translate-x-full': !showSideBar}" id="default-sidebar" class="fixed top-0 left-0 z-100 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+                    <div (click)="showSideBar = !showSideBar" class="cursor-pointer cont-btn-close-menu-mobile absolute right-0 top-0 w-10 h-10 flex flex-row justify-center items-center">
+                        <mat-icon>close</mat-icon>
+                    </div>
+                    <div class="h-full px-3 pt-10 pb-4 overflow-y-auto bg-gray-50">
+                       <ul class="space-y-2 font-medium">
+                          <li>
+                             <a (click)="showSideBar = !showSideBar" [routerLink]="['dashboard']" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-300">
+                                <div class="h-[20px] w-[20px]">
+                                    <img class="" src="Dashboard.svg" alt="dashboard-icon">
+                                </div>
+                                <span class="ms-3 p-primary-color" >Dashboard</span>
+                             </a>
+                          </li>
+                          <li *ngIf="showAuthorizedOption()">
+                             <a (click)="showSideBar = !showSideBar" [routerLink]="['plants/monitoring']" class="flex items-center justify-center p-2 text-gray-900 rounded-lg hover:bg-gray-300">
+                                <div class="h-[20px] w-[20px] flex flex-row justify-center items-center">
+                                    <img class="svg-sidebar-selected" src="Monitoreo por planta.svg" alt="monitoreo-por-plantas-icon-svg">
+                                </div>
+                                <span class="flex-1 ms-3 whitespace-nowrap p-primary-color">Monitoreo por planta</span>
+                             </a>
+                          </li>
+                          <li *ngIf="showAuthorizedOption()">
+                             <a (click)="showSideBar = !showSideBar" [routerLink]="['sensors/history']" class="flex items-center justify-center p-2 text-gray-900 rounded-lg hover:bg-gray-300 ">
+                                <div class="h-[20px] w-[20px] flex flex-row justify-center items-center">
+                                    <img class="svg-sidebar-selected " src="Histórico de sensores.svg" alt="historico-de-sensores-icon-svg">
+                                </div>
+                                <span class="flex-1 ms-3 whitespace-nowrap p-primary-color">Histórico de sensores</span>
+                             </a>
+                          </li>
+                          <li *ngIf="showAuthorizedOption()">
+                             <a (click)="showSideBar = !showSideBar" [routerLink]="['plants/history']" class="flex items-center justify-center p-2 text-gray-900 rounded-lg hover:bg-gray-300 ">
+                                <div class="h-[20px] w-[20px] flex flex-row justify-center items-center">
+                                    <img class="svg-sidebar-selected" src="Históricodeplantas.svg" alt="historico-plantas-icon">
+                                </div>
+                                <span class="flex-1 ms-3 whitespace-nowrap p-primary-color">Histórico de plantas</span>
+                             </a>
+                          </li>
+                          <li *ngIf="showAuthorizedOption()">
+                            <a (click)="showSideBar = !showSideBar" [routerLink]="['profile']" class="a-mat-icon flex items-center justify-center p-2 text-gray-900 rounded-lg hover:bg-gray-300">
+                                <mat-icon>account_circle</mat-icon>
+                                <span class="flex-1 ms-3 whitespace-nowrap p-primary-color">Perfil</span>
+                            </a>
+                         </li>
+                          <li>
+                             <a (click)="logout()" class="a-mat-icon flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-300">
+                                <mat-icon>logout</mat-icon>
+                                <span class="flex-1 ms-3 whitespace-nowrap p-primary-color">Cerrar sesión</span>
+                             </a>
+                          </li>
+                       </ul>
+                    </div>
+                 </aside>
             </div>
             <div class="w-[110px] h-[86px] bg-logo-login-mobile md:hidden"></div>
             <div class="mr-6">
-                <div class="w-[32px] h-auto">
+                <div class="cursor-pointer w-[32px] h-auto">
                     <img class="w-full" src="icon_notify_mobile.svg" alt="icon_notify_mobile-svg">
                 </div>
             </div>
